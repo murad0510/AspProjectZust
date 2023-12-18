@@ -4,7 +4,7 @@ namespace AspProjectZust.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-         public IActionResult Birthday()
+        public IActionResult Birthday()
         {
             return View();
         }
@@ -86,5 +86,5 @@ namespace AspProjectZust.WebUI.Controllers
             return View();
         }
     }
-    }
 }
+
