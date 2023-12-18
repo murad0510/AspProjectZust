@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\social\" />
     <Folder Include="wwwroot\images\react\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>
