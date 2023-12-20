@@ -39,7 +39,7 @@
 
             <div class="main-navbar">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a href="index.html" class="navbar-brand d-flex align-items-center">
+                    <a asp-action="NewsFeed" asp-controller="Home" class="navbar-brand d-flex align-items-center">
                         <img src="~/assets/images/logo.png" alt="image">
                     </a>
 
@@ -60,7 +60,7 @@
 
                         <div class="others-options d-flex align-items-center">
                             <div class="option-item">
-                                <a href="index.html" class="home-btn"><i class="flaticon-home"></i></a>
+                                <a asp-action="NewsFeed" asp-controller="Home" class="home-btn"><i class="flaticon-home"></i></a>
                             </div>
                             <div class="option-item">
                                 <div class="dropdown friend-requests-nav-item">
@@ -315,7 +315,7 @@
                                                 </div>
                                             </div>
                                             <div class="view-all-messages-btn">
-                                                <a href="messages.html" class="default-btn">View All Messages</a>
+                                                <a asp-action="Messages" asp-controller="Home" class="default-btn">View All Messages</a>
                                             </div>
                                         </div>
                                     </div>
@@ -397,7 +397,7 @@
                                                 </div>
                                             </div>
                                             <div class="view-all-notifications-btn">
-                                                <a href="notifications.html" class="default-btn">View All Notifications</a>
+                                                <a asp-action="Notifications" asp-controller="Home" class="default-btn">View All Notifications</a>
                                             </div>
                                         </div>
                                     </div>
@@ -438,14 +438,14 @@
                                     <div class="dropdown-menu">
                                         <div class="profile-header">
                                             <h3>Matthew Turner</h3>
-                                            <a href="mailto:matthew507@gmail.com">matthew507@gmail.com</a>
+                                            <a href="mailto:mazizov7376@gmail.com">matthew507@gmail.com</a>
                                         </div>
                                         <ul class="profile-body">
-                                            <li><i class="flaticon-user"></i> <a href="my-profile.html">My Profile</a></li>
-                                            <li><i class="flaticon-settings"></i> <a href="setting.html">Setting</a></li>
-                                            <li><i class="flaticon-privacy"></i> <a href="privacy.html">Privacy</a></li>
-                                            <li><i class="flaticon-information"></i> <a href="help-and-support.html">Help & Support</a></li>
-                                            <li><i class="flaticon-logout"></i> <a href="index.html">Logout</a></li>
+                                            <li><i class="flaticon-user"></i> <a asp-action="MyProfile" asp-controller="Home">My Profile</a></li>
+                                            <li><i class="flaticon-settings"></i> <a asp-action="Setting" asp-controller="Home">Setting</a></li>
+                                            <li><i class="flaticon-privacy"></i> <a asp-action="Privacy" asp-controller="Home">Privacy</a></li>
+                                            <li><i class="flaticon-information"></i> <a asp-action="HelpAndSupport" asp-controller="Home">Help & Support</a></li>
+                                            <li><i class="flaticon-logout"></i> <a asp-action="NewsFeed" asp-controller="Home">Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -469,7 +469,7 @@
                         <div class="option-inner">
                             <div class="others-options d-flex align-items-center">
                                 <div class="option-item">
-                                    <a href="index.html" class="home-btn"><i class="flaticon-home"></i></a>
+                                    <a asp-action="NewsFeed" asp-controller="Home" class="home-btn"><i class="flaticon-home"></i></a>
                                 </div>
                                 <div class="option-item">
                                     <div class="dropdown friend-requests-nav-item">
@@ -556,7 +556,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="view-all-requests-btn">
-                                                    <a href="friends.html" class="default-btn">View All Requests</a>
+                                                    <a asp-action="Friends" asp-controller="Home" class="default-btn">View All Requests</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -620,7 +620,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="view-all-messages-btn">
-                                                    <a href="messages.html" class="default-btn">View All Messages</a>
+                                                    <a asp-action="Messages" asp-controller="Home" class="default-btn">View All Messages</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -672,7 +672,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="view-all-notifications-btn">
-                                                    <a href="notifications.html" class="default-btn">View All Notifications</a>
+                                                    <a asp-action="Notifications" asp-controller="Home" class="default-btn">View All Notifications</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -716,11 +716,11 @@
                                                 <a href="mailto:matthew507@gmail.com">matthew507@gmail.com</a>
                                             </div>
                                             <ul class="profile-body">
-                                                <li><i class="flaticon-user"></i> <a href="my-profile.html">My Profile</a></li>
-                                                <li><i class="flaticon-settings"></i> <a href="setting.html">Setting</a></li>
-                                                <li><i class="flaticon-privacy"></i> <a href="privacy.html">Privacy</a></li>
-                                                <li><i class="flaticon-information"></i> <a href="help-and-support.html">Help & Support</a></li>
-                                                <li><i class="flaticon-logout"></i> <a href="index.html">Logout</a></li>
+                                                <li><i class="flaticon-user"></i> <a asp-action="MyProfile" asp-controller="Home">My Profile</a></li>
+                                                <li><i class="flaticon-settings"></i> <a asp-action="Setting" asp-controller="Home">Setting</a></li>
+                                                <li><i class="flaticon-privacy"></i> <a asp-action="Privacy" asp-controller="Home">Privacy</a></li>
+                                                <li><i class="flaticon-information"></i> <a asp-action="HelpAndSupport" asp-controller="Home">Help & Support</a></li>
+                                                <li><i class="flaticon-logout"></i> <a asp-action="NewsFeed" asp-controller="Home">Logout</a></li>
                                             </ul>
                                         </div>
                                     </div>
