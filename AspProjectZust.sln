@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspProjectZust.Business", "AspProjectZust.Business\AspProjectZust.Business.csproj", "{3863FB9C-EC31-4FE9-AE45-B4B60740D665}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspProjectZust.Business", "AspProjectZust.Business\AspProjectZust.Business.csproj", "{3863FB9C-EC31-4FE9-AE45-B4B60740D665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspProjectZust.Core", "AspProjectZust.Core\AspProjectZust.Core.csproj", "{A116C75C-77BC-44EE-B8D4-E59A2098CB2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspProjectZust.Core", "AspProjectZust.Core\AspProjectZust.Core.csproj", "{A116C75C-77BC-44EE-B8D4-E59A2098CB2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspProjectZust.DataAccess", "AspProjectZust.DataAccess\AspProjectZust.DataAccess.csproj", "{EEA24F3D-7DC2-4908-BF2C-5CD11B5BAE89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspProjectZust.DataAccess", "AspProjectZust.DataAccess\AspProjectZust.DataAccess.csproj", "{EEA24F3D-7DC2-4908-BF2C-5CD11B5BAE89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspProjectZust.Entities", "AspProjectZust.Entities\AspProjectZust.Entities.csproj", "{C1A105B5-52A3-479F-8CA1-7241C50038ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspProjectZust.Entities", "AspProjectZust.Entities\AspProjectZust.Entities.csproj", "{C1A105B5-52A3-479F-8CA1-7241C50038ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspProjectZust.WebUI", "AspProjectZust.WebUI\AspProjectZust.WebUI.csproj", "{2E8701CE-0F47-4CBD-BF09-24917A2F2CBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspProjectZust.WebUI", "AspProjectZust.WebUI\AspProjectZust.WebUI.csproj", "{2E8701CE-0F47-4CBD-BF09-24917A2F2CBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

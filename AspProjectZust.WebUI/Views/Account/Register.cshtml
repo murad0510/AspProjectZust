@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@model RegisterViewModel
+<!doctype html>
 <html lang="zxx">
 <head>
     <!-- Required meta tags -->
@@ -62,31 +63,31 @@
                     <div class="register-form">
                         <h2>Register</h2>
 
-                        <form>
+                        <form asp-action="Register" asp-controller="Account" method="post">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control">
+                                <label asp-for="@Model.Name">Name</label>
+                                <input asp-for="@Model.Name" type="text" class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control">
+                                <label asp-for="@Model.Email">Email</label>
+                                <input asp-for="@Model.Email" type="email" class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control">
+                                <label asp-for="@Model.Password">Password</label>
+                                <input asp-for="@Model.Password" type="password" class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input type="password" class="form-control">
+                                <label asp-for="@Model.ConfirmPassword">Confirm Password</label>
+                                <input asp-for="@Model.ConfirmPassword" type="password" class="form-control">
                             </div>
 
                             <div class="remember-me-wrap">
                                 <p>
-                                    <input type="checkbox" id="test1">
-                                    <label for="test1">I Accept The <a href="privacy.html">Privacy</a></label>
+                                    <input asp-for="@Model.IsAcceptThePrivacy" type="checkbox" id="test1">
+                                    <label asp-for="@Model.IsAcceptThePrivacy" for="test1">I Accept The <a asp-action="Privacy" asp-controller="Home">Privacy</a></label>
                                 </p>
                             </div>
                             <button type="submit" class="default-btn">Register</button>

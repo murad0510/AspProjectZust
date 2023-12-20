@@ -1,7 +1,23 @@
+using AspProjectZust.WebUI.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+var connectionString = builder.Configuration.GetConnectionString("myconn");
+
+builder.Services.AddDbContext<CustomIdenityDbContext>(opt =>
+{
+    opt.UseSqlServer(connectionString);
+});
+
+builder.Services.AddIdentity<CustomIdentityUser, CustomIdentityRole>()
+    .AddEntityFrameworkStores<CustomIdenityDbContext>()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 

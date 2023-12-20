@@ -1,6 +1,10 @@
-﻿namespace AspProjectZust.WebUI.Entities
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace AspProjectZust.WebUI.Entities
 {
-    public class CustomIdentityUser
+    public class CustomIdentityUser : IdentityUser
     {
+        public string? ImageUrl { get; set; }
+        public bool IsOnline { get; set; }
     }
 }

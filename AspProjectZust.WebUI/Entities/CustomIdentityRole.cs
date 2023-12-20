@@ -1,6 +1,8 @@
-﻿namespace AspProjectZust.WebUI.Entities
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace AspProjectZust.WebUI.Entities
 {
-    public class CustomIdentityRole
+    public class CustomIdentityRole : IdentityRole
     {
     }
 }
