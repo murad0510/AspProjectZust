@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@model LoginViewModel
+<!doctype html>
 <html lang="zxx">
 <head>
     <!-- Required meta tags -->
@@ -19,6 +20,20 @@
     <link rel="stylesheet" href="~/assets/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
     <link rel="stylesheet" href="~/assets/css/responsive.css">
+
+    <style>
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
 
     <title>Zust - Social Community & Marketplace HTML Template</title>
 
@@ -59,25 +74,25 @@
                     <div class="login-form">
                         <h2>Login</h2>
 
-                        <form asp-action="Register" asp-controller="Account" method="post">
+                        <form asp-action="Login" asp-controller="Account" method="post">
                             <div class="form-group">
-                                <label>Username or email</label>
-                                <input type="text" class="form-control">
+                                <label asp-for="Username">Username</label>
+                                <input asp-for="Username" type="text" class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control">
+                                <label asp-for="Password">Password</label>
+                                <input asp-for="Password" type="password" class="form-control">
                             </div>
 
                             <div class="remember-me-wrap d-flex justify-content-between align-items-center">
                                 <p>
-                                    <input type="checkbox" id="test1">
-                                    <label for="test1">Remember me</label>
+                                    <input asp-for="RememberMe" type="checkbox" id="test1">
+                                    <label asp-for="RememberMe" for="test1">Remember me</label>
                                 </p>
 
                                 <div class="lost-your-password-wrap">
-                                    <a asp-action="ForgtPassword" asp-controller="Account" class="lost-your-password">Forgot password ?</a>
+                                    <a asp-action="ForgotPassword" asp-controller="Account" class="lost-your-password">Forgot password ?</a>
                                 </div>
                             </div>
                             <button type="submit" class="default-btn">Login</button>
@@ -90,7 +105,9 @@
         </div>
 
         <div class="home-btn-icon">
-            <a asp-action="NewsFeed" asp-controller="Home"><i class="flaticon-home"></i></a>
+            <a asp-action="Register" asp-controller="Account">
+                <button class="btn btn-primary">Register</button>
+            </a>
         </div>
     </div>
     <!-- End Preloader Area -->

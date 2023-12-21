@@ -1,4 +1,5 @@
-﻿﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -403,28 +404,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="option-item">
-                                <div class="dropdown language-option">
-                                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="flaticon-global"></i>
-                                        <span class="lang-name"></span>
-                                    </button>
-                                    <div class="dropdown-menu language-dropdown-menu">
-                                        <a class="dropdown-item" href="#">
-                                            <img src="~/assets/images/uk.png" alt="flag">
-                                            Eng
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <img src="~/assets/images/china.png" alt="flag">
-                                            简体中文
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <img src="~/assets/images/uae.png" alt="flag">
-                                            العربيّة
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="option-item">
                                 <div class="dropdown profile-nav-item">
                                     <a href="#" class="dropdown-bs-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -438,19 +418,20 @@
                                     <div class="dropdown-menu">
                                         <div class="profile-header">
                                             <h3>Matthew Turner</h3>
-                                            <a href="mailto:mazizov7376@gmail.com">matthew507@gmail.com</a>
+                                            <a href="mailto:matthew507@gmail.com">matthew507@gmail.com</a>
                                         </div>
                                         <ul class="profile-body">
                                             <li><i class="flaticon-user"></i> <a asp-action="MyProfile" asp-controller="Home">My Profile</a></li>
                                             <li><i class="flaticon-settings"></i> <a asp-action="Setting" asp-controller="Home">Setting</a></li>
                                             <li><i class="flaticon-privacy"></i> <a asp-action="Privacy" asp-controller="Home">Privacy</a></li>
                                             <li><i class="flaticon-information"></i> <a asp-action="HelpAndSupport" asp-controller="Home">Help & Support</a></li>
-                                            <li><i class="flaticon-logout"></i> <a asp-action="NewsFeed" asp-controller="Home">Logout</a></li>
+                                            <li><i class="flaticon-logout"></i> <a asp-action="Login" asp-controller="Account">Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
+
                     </div>
                 </nav>
             </div>
@@ -903,12 +884,10 @@
     </div>
 
 
-    @*     <div class="container">
-    <main role="main" class="pb-3">
-    </main>
+@*     <div class="go-top">
+        <i class="ri-arrow-up-line"></i>
     </div> *@
 
-    <script src="~/assets/js/functions.js"></script>
     <script src="~/assets/js/jquery.min.js"></script>
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/jquery.magnific-popup.min.js"></script>
