@@ -11,8 +11,8 @@
 
     <div class="dropdown-menu">
         <div class="profile-header">
-            <h3>Matthew Turner</h3>
-            <a href="mailto:matthew507@gmail.com">@Model.Email</a>
+            <h3>@Model.UserName</h3>
+            <a href=`mailto:${@Model.Email}`>@Model.Email</a>
         </div>
         <ul class="profile-body">
             <li><i class="flaticon-user"></i> <a asp-action="MyProfile" asp-controller="Home">My Profile</a></li>
