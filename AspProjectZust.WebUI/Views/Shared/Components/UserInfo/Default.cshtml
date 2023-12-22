@@ -1,0 +1,26 @@
+﻿@model UserInfoViewModel
+
+<div class="dropdown profile-nav-item">
+    <a href="#" class="dropdown-bs-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="menu-profile">
+            <img src="~/assets/images/user/user-1.jpg" class="rounded-circle" alt="image">
+            <span class="name">@Model.UserName</span>
+            <span class="status-online"></span>
+        </div>
+    </a>
+
+    <div class="dropdown-menu">
+        <div class="profile-header">
+            <h3>Matthew Turner</h3>
+            <a href="mailto:matthew507@gmail.com">@Model.Email</a>
+        </div>
+        <ul class="profile-body">
+            <li><i class="flaticon-user"></i> <a asp-action="MyProfile" asp-controller="Home">My Profile</a></li>
+            <li><i class="flaticon-settings"></i> <a asp-action="Setting" asp-controller="Home">Setting</a></li>
+            <li><i class="flaticon-privacy"></i> <a asp-action="Privacy" asp-controller="Home">Privacy</a></li>
+            <li><i class="flaticon-information"></i> <a asp-action="HelpAndSupport" asp-controller="Home">Help & Support</a></li>
+            <li><i class="flaticon-logout"></i> <a asp-action="Login" asp-controller="Account">Logout</a></li>
+        </ul>
+    </div>
+</div>
+

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspProjectZust.WebUI.Migrations
 {
     [DbContext(typeof(CustomIdenityDbContext))]
-    [Migration("20231221164400_LoginRegister")]
+    [Migration("20231222101815_LoginRegister")]
     partial class LoginRegister
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,9 @@ namespace AspProjectZust.WebUI.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()

@@ -7,6 +7,8 @@ namespace AspProjectZust.WebUI.Models
         [Required]
         public string? Name { get; set; }
         [Required]
+        public string? City { get; set; }
+        [Required]
         public string? Email { get; set; }
         [DataType(DataType.Password)]
         public string? Password { get; set; }

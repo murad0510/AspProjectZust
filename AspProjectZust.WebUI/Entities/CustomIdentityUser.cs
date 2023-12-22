@@ -9,5 +9,6 @@ namespace AspProjectZust.WebUI.Entities
         public int Likes { get; set; }
         public int Following { get; set; }
         public int Followers { get; set; }
+        public string? City { get; set; }
     }
 }
