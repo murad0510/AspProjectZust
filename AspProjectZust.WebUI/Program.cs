@@ -1,4 +1,5 @@
 using AspProjectZust.WebUI.Entities;
+using AspProjectZust.WebUI.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,8 @@ builder.Services.AddIdentity<CustomIdentityUser, CustomIdentityRole>()
     .AddEntityFrameworkStores<CustomIdenityDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,8 +40,10 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute("Default", "{controller=Account}/{action=Login}/{id?}");
+    endpoints.MapHub<UserHub>("/userhub");
+});
 
 app.Run();

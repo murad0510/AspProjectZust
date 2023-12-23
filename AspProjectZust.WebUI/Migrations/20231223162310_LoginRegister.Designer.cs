@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspProjectZust.WebUI.Migrations
 {
     [DbContext(typeof(CustomIdenityDbContext))]
-    [Migration("20231222104026_LoginRegister")]
+    [Migration("20231223162310_LoginRegister")]
     partial class LoginRegister
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
