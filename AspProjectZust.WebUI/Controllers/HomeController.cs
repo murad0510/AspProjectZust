@@ -1,4 +1,4 @@
-﻿using AspProjectZust.WebUI.Entities;
+﻿using AspProjectZust.Entities.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

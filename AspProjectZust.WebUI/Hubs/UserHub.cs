@@ -8,7 +8,7 @@ namespace AspProjectZust.WebUI.Hubs
     {
         public async override Task OnConnectedAsync()
         {
-            Clients.Others.SendAsync("Slam", "d");
+            await Clients.Others.SendAsync("Slam", "d");
             //return base.OnConnectedAsync();
         }
 

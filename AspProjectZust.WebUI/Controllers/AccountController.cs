@@ -1,4 +1,4 @@
-﻿using AspProjectZust.WebUI.Entities;
+﻿using AspProjectZust.Entities.Entity;
 using AspProjectZust.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +11,9 @@ namespace AspProjectZust.WebUI.Controllers
         private readonly UserManager<CustomIdentityUser> _userManager;
         private readonly RoleManager<CustomIdentityRole> _roleManager;
         private readonly SignInManager<CustomIdentityUser> _signInManager;
-        private CustomIdenityDbContext _customIdenityDbContext;
+        private CustomIdentityDbContext _customIdenityDbContext;
 
-        public AccountController(UserManager<CustomIdentityUser> userManager, RoleManager<CustomIdentityRole> roleManager, SignInManager<CustomIdentityUser> signInManager, CustomIdenityDbContext customIdenityDbContext)
+        public AccountController(UserManager<CustomIdentityUser> userManager, RoleManager<CustomIdentityRole> roleManager, SignInManager<CustomIdentityUser> signInManager, CustomIdentityDbContext customIdenityDbContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;

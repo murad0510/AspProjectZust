@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AspProjectZust.Core\AspProjectZust.Core.csproj" />
+    <ProjectReference Include="..\AspProjectZust.Entities\AspProjectZust.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

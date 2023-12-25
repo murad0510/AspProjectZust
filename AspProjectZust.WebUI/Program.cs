@@ -1,4 +1,4 @@
-using AspProjectZust.WebUI.Entities;
+using AspProjectZust.Entities.Entity;
 using AspProjectZust.WebUI.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +11,13 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("myconn");
 
-builder.Services.AddDbContext<CustomIdenityDbContext>(opt =>
+builder.Services.AddDbContext<CustomIdentityDbContext>(opt =>
 {
     opt.UseSqlServer(connectionString);
 });
 
 builder.Services.AddIdentity<CustomIdentityUser, CustomIdentityRole>()
-    .AddEntityFrameworkStores<CustomIdenityDbContext>()
+    .AddEntityFrameworkStores<CustomIdentityDbContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddSignalR();
