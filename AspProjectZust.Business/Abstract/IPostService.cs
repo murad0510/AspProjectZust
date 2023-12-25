@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AspProjectZust.Business.Abstract
 {
-    public interface IUserService
+    public interface IPostService
     {
         Task<List<CustomIdentityUser>> GetAll();
         //Task<List<CustomIdentityUser>> GetAllByCategory(int categoryId);

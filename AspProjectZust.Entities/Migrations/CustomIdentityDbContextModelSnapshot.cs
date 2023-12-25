@@ -22,6 +22,27 @@ namespace AspProjectZust.Entities.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("AspProjectZust.Entities.Entity.Chat", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.ToTable("Chats");
+                });
+
             modelBuilder.Entity("AspProjectZust.Entities.Entity.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -36,7 +57,7 @@ namespace AspProjectZust.Entities.Migrations
                     b.Property<int>("LikeCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PostId")
+                    b.Property<int>("PostId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -51,7 +72,7 @@ namespace AspProjectZust.Entities.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("AspProjectZust.Entities.Entity.CustomIdentityRole", b =>
@@ -129,6 +150,9 @@ namespace AspProjectZust.Entities.Migrations
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFriend")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsOnline")
                         .HasColumnType("bit");
@@ -217,7 +241,91 @@ namespace AspProjectZust.Entities.Migrations
 
                     b.HasIndex("YourFriendId");
 
-                    b.ToTable("Friend");
+                    b.ToTable("Friends");
+                });
+
+            modelBuilder.Entity("AspProjectZust.Entities.Entity.FriendRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("FriendRequests");
+                });
+
+            modelBuilder.Entity("AspProjectZust.Entities.Entity.Message", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<int>("ChatId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsImage")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("WriteTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("ChatId");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("AspProjectZust.Entities.Entity.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.ToTable("Notification");
                 });
 
             modelBuilder.Entity("AspProjectZust.Entities.Entity.Post", b =>
@@ -250,7 +358,7 @@ namespace AspProjectZust.Entities.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -359,11 +467,22 @@ namespace AspProjectZust.Entities.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AspProjectZust.Entities.Entity.Chat", b =>
+                {
+                    b.HasOne("AspProjectZust.Entities.Entity.CustomIdentityUser", "Receiver")
+                        .WithMany("Chats")
+                        .HasForeignKey("ReceiverId");
+
+                    b.Navigation("Receiver");
+                });
+
             modelBuilder.Entity("AspProjectZust.Entities.Entity.Comment", b =>
                 {
                     b.HasOne("AspProjectZust.Entities.Entity.Post", "Post")
                         .WithMany("Comments")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AspProjectZust.Entities.Entity.CustomIdentityUser", "User")
                         .WithMany()
@@ -385,6 +504,35 @@ namespace AspProjectZust.Entities.Migrations
                         .HasForeignKey("YourFriendId");
 
                     b.Navigation("YourFriend");
+                });
+
+            modelBuilder.Entity("AspProjectZust.Entities.Entity.FriendRequest", b =>
+                {
+                    b.HasOne("AspProjectZust.Entities.Entity.CustomIdentityUser", "Sender")
+                        .WithMany("FriendRequests")
+                        .HasForeignKey("SenderId");
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("AspProjectZust.Entities.Entity.Message", b =>
+                {
+                    b.HasOne("AspProjectZust.Entities.Entity.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+                });
+
+            modelBuilder.Entity("AspProjectZust.Entities.Entity.Notification", b =>
+                {
+                    b.HasOne("AspProjectZust.Entities.Entity.CustomIdentityUser", "Receiver")
+                        .WithMany("Notifications")
+                        .HasForeignKey("ReceiverId");
+
+                    b.Navigation("Receiver");
                 });
 
             modelBuilder.Entity("AspProjectZust.Entities.Entity.Post", b =>
@@ -447,9 +595,20 @@ namespace AspProjectZust.Entities.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AspProjectZust.Entities.Entity.Chat", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("AspProjectZust.Entities.Entity.CustomIdentityUser", b =>
                 {
+                    b.Navigation("Chats");
+
+                    b.Navigation("FriendRequests");
+
                     b.Navigation("Friends");
+
+                    b.Navigation("Notifications");
 
                     b.Navigation("Posts");
                 });

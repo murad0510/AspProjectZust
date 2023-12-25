@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace AspProjectZust.Business.Abstract
 {
-    public interface IUserService
+    public interface IChatService
     {
         Task<List<CustomIdentityUser>> GetAll();
-        //Task<List<CustomIdentityUser>> GetAllByCategory(int categoryId);
         Task Add(CustomIdentityUser user);
-        Task Update(CustomIdentityUser user);
-        Task Delete(int id);
-        Task<CustomIdentityUser> GetById(int id);
+        //Task Update(CustomIdentityUser user);
+        //Task Delete(int id);
+        //Task<CustomIdentityUser> GetById(int id);
     }
 }

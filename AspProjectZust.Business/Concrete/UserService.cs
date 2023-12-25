@@ -11,8 +11,14 @@ namespace AspProjectZust.Business.Concrete
 {
     public class UserService : IUserService
     {
-        private IUserDal 
-        public Task Add(CustomIdentityDbContext user)
+        private IUserDal _userDal;
+
+        public UserService(IUserDal userDal)
+        {
+            _userDal = userDal;
+        }
+
+        public Task Add(CustomIdentityUser user)
         {
             throw new NotImplementedException();
         }
@@ -22,17 +28,22 @@ namespace AspProjectZust.Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Task<List<CustomIdentityDbContext>> GetAll()
+        public Task<List<CustomIdentityUser>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<CustomIdentityDbContext> GetById(int id)
+        public Task<List<CustomIdentityUser>> GetAllByCategory(int categoryId)
         {
             throw new NotImplementedException();
         }
 
-        public Task Update(CustomIdentityDbContext user)
+        public Task<CustomIdentityUser> GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(CustomIdentityUser user)
         {
             throw new NotImplementedException();
         }

@@ -11,9 +11,8 @@ async function Start() {
     }
 }
 
-
 Start()
 
-connection.on("Slam", function (s) {
+connection.on("Connect", function (s) {
     console.log(s);
 })

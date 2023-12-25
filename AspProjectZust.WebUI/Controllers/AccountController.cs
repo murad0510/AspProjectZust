@@ -67,6 +67,7 @@ namespace AspProjectZust.WebUI.Controllers
                     UserName = registerViewModel.Name,
                     City = registerViewModel.City
                 };
+
                 var result = await _userManager.CreateAsync(user, registerViewModel.Password);
                 if (result.Succeeded)
                 {

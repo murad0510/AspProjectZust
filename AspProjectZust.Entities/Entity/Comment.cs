@@ -11,6 +11,7 @@ namespace AspProjectZust.Entities.Entity
     {
         public int Id { get; set; }
         public int LikeCount { get; set; }
+        public int PostId { get; set; }
         public DateTime WriteTime { get; set; }
         public int CustomIdentityUserId { get; set; }
 
