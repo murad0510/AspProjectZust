@@ -78,7 +78,7 @@
                                             <i class="flaticon-menu"></i>
                                         </div>
 
-                                        <div class="friend-requests-body" data-simplebar>
+                                        <div id="requests" class="friend-requests-body" data-simplebar>
                                             <div class="item d-flex align-items-center">
                                                 <div class="figure">
                                                     <a href="#"><img src="~/assets/images/user/user-2.jpg" class="rounded-circle" alt="image"></a>
@@ -864,7 +864,12 @@
 
     <script src="~/assets/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/assets/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/assets/js/site.js"></script>
+    <script src="~/assets/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/js/user.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

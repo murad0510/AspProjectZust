@@ -1,7 +1,6 @@
 ﻿using AspProjectZust.Entities.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 
 namespace AspProjectZust.WebUI.Hubs
 {
@@ -21,13 +20,12 @@ namespace AspProjectZust.WebUI.Hubs
         public async override Task OnConnectedAsync()
         {
             var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
-            var userItem = _customIdentityDbContext.Users.SingleOrDefault(s => s.Id == user.Id);
+            var userItem = _customIdentityDbContext.Users.SingleOrDefault(x => x.Id == user.Id);
             userItem.IsOnline = true;
             await _customIdentityDbContext.SaveChangesAsync();
 
-            var info = $"Connected User : {userItem.UserName}";
+            string info = user.UserName + " connected successfully";
             await Clients.Others.SendAsync("Connect", info);
-            //return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception? exception)

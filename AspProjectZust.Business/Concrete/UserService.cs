@@ -28,9 +28,9 @@ namespace AspProjectZust.Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Task<List<CustomIdentityUser>> GetAll()
+        public async Task<List<CustomIdentityUser>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _userDal.GetList();
         }
 
         public Task<List<CustomIdentityUser>> GetAllByCategory(int categoryId)

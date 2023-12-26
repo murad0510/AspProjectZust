@@ -151,6 +151,9 @@ namespace AspProjectZust.Entities.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsFriend")
                         .HasColumnType("bit");
 

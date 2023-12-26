@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AspProjectZust.Business\AspProjectZust.Business.csproj" />
     <ProjectReference Include="..\AspProjectZust.Entities\AspProjectZust.Entities.csproj" />
   </ItemGroup>
 

@@ -1,18 +1,20 @@
 ﻿
 var connection = new signalR.HubConnectionBuilder().withUrl("/userhub").build();
 
-async function Start() {
-    try {
-        await connection.start();
+connection.start().then(function () {
+    GetAllUsers();
+    console.log("Connected");
+}).catch(function (err) {
+    return console.error(err.toString());
+})
 
-        console.log("SignalR Connected");
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-Start()
-
-connection.on("Connect", function (s) {
-    console.log(s);
+connection.on("Connect", function (info) {
+    console.log(info);
+    GetAllUsers();
+    //element.style.display = "block";
+    //element.innerHTML = info;
+    //setTimeout(() => {
+    //    element.innerHTML = "";
+    //    element.style.display = "none";
+    //}, 5000);
 })

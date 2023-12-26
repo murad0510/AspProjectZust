@@ -1,3 +1,7 @@
+using AspProjectZust.Business.Abstract;
+using AspProjectZust.Business.Concrete;
+using AspProjectZust.DataAccess.Abstract;
+using AspProjectZust.DataAccess.Concrete.EFEntityFramework;
 using AspProjectZust.Entities.Entity;
 using AspProjectZust.WebUI.Hubs;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IUserDal, EFUserDal>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 var connectionString = builder.Configuration.GetConnectionString("myconn");
 
@@ -15,6 +22,8 @@ builder.Services.AddDbContext<CustomIdentityDbContext>(opt =>
 {
     opt.UseSqlServer(connectionString);
 });
+
+
 
 builder.Services.AddIdentity<CustomIdentityUser, CustomIdentityRole>()
     .AddEntityFrameworkStores<CustomIdentityDbContext>()

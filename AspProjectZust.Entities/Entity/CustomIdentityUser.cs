@@ -1,4 +1,5 @@
 ﻿using AspProjectZust.Core.Abstraction;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace AspProjectZust.Entities.Entity
         public int FollowingCount { get; set; }
         public bool IsOnline { get; set; }
         public bool IsFriend { get; set; }
+        [NotMapped]
+        public IFormFile CoverPhoto { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? BackUpEmail { get; set; }
@@ -42,6 +45,7 @@ namespace AspProjectZust.Entities.Entity
         public string? Address { get; set; }
         public string? Country { get; set; }
         public string? City { get; set; }
+        public string? ImageUrl { get; set; }
 
         public virtual IEnumerable<Friend>? Friends { get; set; }
         public virtual IEnumerable<Post>? Posts { get; set; }
