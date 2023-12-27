@@ -2,7 +2,7 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/userhub").build();
 
 connection.start().then(function () {
-    GetAllUsers();
+    //GetAllUsers();
     console.log("Connected");
 }).catch(function (err) {
     return console.error(err.toString());
@@ -10,7 +10,7 @@ connection.start().then(function () {
 
 connection.on("Connect", function (info) {
     console.log(info);
-    GetAllUsers();
+    //GetAllUsers();
     //element.style.display = "block";
     //element.innerHTML = info;
     //setTimeout(() => {

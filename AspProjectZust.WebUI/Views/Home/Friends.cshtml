@@ -63,7 +63,7 @@
 
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="friend-requests" role="tabpanel">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center" id="allUsers">
 
                 </div>
 
@@ -73,56 +73,6 @@
             </div>
 
             <div class="tab-pane fade" id="people-you-know" role="tabpanel">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-friends-card">
-                        <div class="friends-image">
-                            <a href="#">
-                                <img src="~/assets/images/friends/friends-bg-10.jpg" alt="image">
-                            </a>
-                            <div class="icon">
-                                <a href="#"><i class="flaticon-user"></i></a>
-                            </div>
-                        </div>
-                        <div class="friends-content">
-                            <div class="friends-info d-flex justify-content-between align-items-center">
-                                <a href="#">
-                                    <img src="~/assets/images/user/user-19.jpg" alt="image">
-                                </a>
-                                <div class="text ms-3">
-                                    <h3><a href="#">${data[i].userName}</a></h3>
-                                </div>
-                            </div>
-                            <ul class="statistics">
-                                <li>
-                                    <a href="#">
-                                        <span class="item-number">${data[i].likeCount}</span>
-                                        <span class="item-text">Likes</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="item-number">${data[i].followingCount}</span>
-                                        <span class="item-text">Following</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="item-number">${data[i].followersCount}</span>
-                                        <span class="item-text">Followers</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="button-group d-flex justify-content-between align-items-center">
-                                <div class="add-friend-btn">
-                                    <a asp-controller="Home" asp-action="SendFollow" asp-route-id="8c690c2c-0147-495f-b21d-480fe9025965" class='btn btn-outline-primary'> Follow</a>
-                                </div>
-                                <div class="send-message-btn">
-                                    <button type="submit">Send Message</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
                 <div class="load-more-posts-btn">
@@ -160,6 +110,6 @@
     <script src="~/assets/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/assets/js/site.js"></script>
     <script src="~/assets/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/assets/js/user.js"></script>
+    @*<script src="~/assets/js/user.js"></script>*@
 </body>
 </html>
