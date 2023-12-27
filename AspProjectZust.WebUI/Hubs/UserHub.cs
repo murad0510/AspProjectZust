@@ -18,6 +18,8 @@ namespace AspProjectZust.WebUI.Hubs
             _context = context;
         }
 
+
+
         public async override Task OnConnectedAsync()
         {
             var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
@@ -29,16 +31,16 @@ namespace AspProjectZust.WebUI.Hubs
             await Clients.Others.SendAsync("Connect", info);
         }
 
-        //public async override Task OnDisconnectedAsync(Exception? exception)
-        //{
-        //    var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
-        //    var userItem = _context.Users.SingleOrDefault(x => x.Id == user.Id);
-        //    userItem.IsOnline = false;
-        //    userItem.DisconnectTime = DateTime.Now;
-        //    await _context.SaveChangesAsync();
-        //    string info = user.UserName + " disconnected successfully";
-        //    await Clients.Others.SendAsync("Disconnect", info);
-        //}
+        public async override Task OnDisconnectedAsync(Exception? exception)
+        {
+            //var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
+            //var userItem = _context.Users.SingleOrDefault(x => x.Id == user.Id);
+            //userItem.IsOnline = false;
+            //userItem.DisconnectTime = DateTime.Now;
+            //await _context.SaveChangesAsync();
+            //string info = user.UserName + " disconnected successfully";
+            await Clients.Others.SendAsync("Disconnect", "s");
+        }
 
         public async Task SendFollow(string id)
         {

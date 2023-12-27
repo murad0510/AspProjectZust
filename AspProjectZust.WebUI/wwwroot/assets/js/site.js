@@ -9,7 +9,7 @@ connection.start().then(function () {
     return console.error(err.toString());
 })
 
-let element = document.querySelector("#alert");
+//let element = document.querySelector("#alert");
 connection.on("Connect", function (info) {
     console.log("Connect Work");
     //GetAllUsers();
@@ -19,4 +19,24 @@ connection.on("Connect", function (info) {
     //    element.innerHTML = "";
     //    element.style.display = "none";
     //}, 5000);
+})
+
+connection.on("Disconnect", function (info) {
+    console.log("DisConnect Work");
+    //GetAllUsers();
+    //element.style.display = "block";
+    //element.innerHTML = info;
+    //setTimeout(() => {
+    //    element.innerHTML = "";
+    //    element.style.display = "none";
+    //}, 5000);
+})
+
+async function SendFollowCall(id) {
+    await connection.invoke("SendFollow", id);
+}
+
+connection.on("ReceiveNotification", function () {
+    GetMyRequests();
+    GetAllUsers();
 })
