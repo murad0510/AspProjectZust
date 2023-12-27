@@ -1,5 +1,6 @@
-﻿
-var connection = new signalR.HubConnectionBuilder().withUrl("/userhub").build();
+﻿"use strict"
+
+var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
 
 connection.start().then(function () {
     //GetAllUsers();
@@ -8,8 +9,9 @@ connection.start().then(function () {
     return console.error(err.toString());
 })
 
+let element = document.querySelector("#alert");
 connection.on("Connect", function (info) {
-    console.log(info);
+    console.log("Connect Work");
     //GetAllUsers();
     //element.style.display = "block";
     //element.innerHTML = info;

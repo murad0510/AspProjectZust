@@ -23,8 +23,6 @@ builder.Services.AddDbContext<CustomIdentityDbContext>(opt =>
     opt.UseSqlServer(connectionString);
 });
 
-
-
 builder.Services.AddIdentity<CustomIdentityUser, CustomIdentityRole>()
     .AddEntityFrameworkStores<CustomIdentityDbContext>()
     .AddDefaultTokenProviders();
@@ -51,8 +49,8 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllerRoute("Default", "{controller=Account}/{action=Login}/{id?}");
-    endpoints.MapHub<UserHub>("/userhub");
+    endpoints.MapControllerRoute("Default", "{controller=Home}/{action=NewsFeed}/{id?}");
+    endpoints.MapHub<UserHub>("/chathub");
 });
 
 app.Run();
