@@ -1,5 +1,6 @@
 ﻿using AspProjectZust.Business.Abstract;
 using AspProjectZust.Entities.Entity;
+using AspProjectZust.WebUI.Helpers;
 using AspProjectZust.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,15 +13,17 @@ namespace AspProjectZust.WebUI.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        public UserManager<CustomIdentityUser> _userManager;
-        public readonly IUserService _userService;
-        public CustomIdentityDbContext _dbContext;
+        private UserManager<CustomIdentityUser> _userManager;
+        private readonly IUserService _userService;
+        private IWebHostEnvironment _webHost;
+        private CustomIdentityDbContext _dbContext;
 
-        public HomeController(UserManager<CustomIdentityUser> userManager, IUserService userService, CustomIdentityDbContext dbContext)
+        public HomeController(UserManager<CustomIdentityUser> userManager, IUserService userService, CustomIdentityDbContext dbContext, IWebHostEnvironment webHost)
         {
             _userManager = userManager;
             _userService = userService;
             _dbContext = dbContext;
+            _webHost = webHost;
         }
 
         public IActionResult Birthday()
@@ -65,18 +68,29 @@ namespace AspProjectZust.WebUI.Controllers
         }
 
 
-        public IActionResult MyProfile()
+        public async Task<IActionResult> MyProfile()
         {
-            //UpdateUserViewModel userInfo = new UpdateUserViewModel();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            ViewBag.User = user;
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult MyProfile(UpdateUserViewModel user)
-        //{
-        //    //UpdateUserViewModel userInfo = new UpdateUserViewModel();
-        //    return View();
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MyProfile(UserInfoViewModel userInfo)
+        {
+            var helper = new ImageHelper(_webHost);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (userInfo.File != null)
+            {
+                userInfo.ImageUrl = await helper.SaveFile(userInfo.File);
+                user.ImageUrl = userInfo.ImageUrl;
+                _dbContext.Update(user);
+                await _dbContext.SaveChangesAsync();
+            }
+            ViewBag.User = user;
+            return View();
+        }
 
         public async Task<IActionResult> NewsFeed()
         {
@@ -114,6 +128,15 @@ namespace AspProjectZust.WebUI.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var data = await _dbContext.Users.Where(i => i.Id != user.Id).ToListAsync();
+            //var data = await _userService.GetAll();
+            //var all = new List<CustomIdentityUser>();
+            //for (int i = 0; i < data.Count(); i++)
+            //{
+            //    if (data[i].Id == user.Id)
+            //    {
+            //        all.Add(data[i]);
+            //    }
+            //}
             return Ok(data);
         }
 
@@ -160,13 +183,35 @@ namespace AspProjectZust.WebUI.Controllers
         //    return Ok(requests);
         //}
 
+        [HttpGet]
         public async Task<IActionResult> GetAllRequests()
         {
             var current = await _userManager.GetUserAsync(HttpContext.User);
-            var data = _dbContext.FriendRequests.Where(r => r.ReceiverId == current.Id);
-            return Ok(data);
+            var requests = _dbContext.FriendRequests.Where(r => r.ReceiverId == current.Id);
+            return Ok(requests);
         }
 
+        //[HttpPut]
+        public async Task<IActionResult> UserUpdateInfo(UpdateUserViewModel updateUser)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            user.PhoneNumber = updateUser.PhoneNumber;
+            user.Address = updateUser.Address;
+            user.Country = updateUser.Country;
+            user.Email = updateUser.Email;
+            user.FirstName = updateUser.FirstName;
+            user.LastName = updateUser.LastName;
+            user.City = updateUser.City;
+            user.Gender = updateUser.Gender;
+            user.Occupation = updateUser.Occupation;
+            user.RelationStatus = updateUser.RelationStatus;
+            user.BloodGroup = updateUser.BloodGroup;
+            user.Language = updateUser.Language;
+            user.DateOfBirth = updateUser.DateOfBirth;
+            _dbContext.Update(user);
+            await _dbContext.SaveChangesAsync();
+            return View("Setting", "Home");
+        }
 
         //[HttpPost]
         //public IActionResult UserChangeProfile(UpdateUserViewModel user)

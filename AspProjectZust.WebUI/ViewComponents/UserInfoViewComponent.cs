@@ -17,12 +17,13 @@ namespace AspProjectZust.WebUI.ViewComponents
 
         public ViewViewComponentResult Invoke()
         {
-            var user =  _userManager.GetUserAsync(HttpContext.User).Result;
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
 
             var user2 = new UserInfoViewModel
             {
                 UserName = user.UserName,
                 Email = user.Email,
+                ImageUrl = user.ImageUrl,
             };
 
             return View(user2);

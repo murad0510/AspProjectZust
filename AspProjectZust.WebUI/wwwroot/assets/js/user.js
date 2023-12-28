@@ -1,4 +1,5 @@
 ﻿function SendFollow(id) {
+    alert("SendFollow request");
     $.ajax({
         url: `/Home/SendFollow/${id}`,
         method: "GET",
@@ -68,7 +69,7 @@ async function GetAllUsers() {
                 var context = "";
                 let subContent = "";
                 if (data[i].isFriend) {
-                    subContent = `<button  class='btn btn-outline-secondary' onclick="UnFollowCall('${data[i].id}')"> UnFollow</button>`;
+                    subContent = `<button class='btn btn-outline-secondary' onclick="UnFollowCall('${data[i].id}')"> UnFollow</button>`;
                 }
                 else {
 
@@ -79,7 +80,7 @@ async function GetAllUsers() {
                        <div class="single-friends-card">
                            <div class="friends-image">
                                <a href="#">
-                                    <img src="~/assets/images/friends/friends-bg-10.jpg" alt="image">
+                                    <img src="/assets/images/friends/friends-bg-10.jpg" alt="image">
                                </a>
                                <div class="icon">
                                    <a href="#"><i class="flaticon-user"></i></a>
@@ -88,7 +89,7 @@ async function GetAllUsers() {
                            <div class="friends-content">
                                <div class="friends-info d-flex justify-content-between align-items-center">
                                    <a href="#">
-                                        <img src="~/assets/images/user/user-19.jpg" alt="image">
+                                        <img style="width:100px;height:100px" src='/assets/images/user/${data[i].imageUrl}' alt="image">
                                    </a>
                                    <div class="text ms-3">
                                        <h3><a href="#">${data[i].userName}</a></h3>

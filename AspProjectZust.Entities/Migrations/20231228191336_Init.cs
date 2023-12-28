@@ -33,6 +33,7 @@ namespace AspProjectZust.Entities.Migrations
                     FollowingCount = table.Column<int>(type: "int", nullable: false),
                     IsOnline = table.Column<bool>(type: "bit", nullable: false),
                     IsFriend = table.Column<bool>(type: "bit", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BackUpEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -45,7 +46,6 @@ namespace AspProjectZust.Entities.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -64,6 +64,97 @@ namespace AspProjectZust.Entities.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserBloodGroups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Blood = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserBloodGroups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserCities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserCities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserCountries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserCountries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserGenders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserGenders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserLanguages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Tongue = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLanguages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserOccupations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserOccupations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRelationStatus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRelationStatus", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -448,6 +539,27 @@ namespace AspProjectZust.Entities.Migrations
 
             migrationBuilder.DropTable(
                 name: "Notification");
+
+            migrationBuilder.DropTable(
+                name: "UserBloodGroups");
+
+            migrationBuilder.DropTable(
+                name: "UserCities");
+
+            migrationBuilder.DropTable(
+                name: "UserCountries");
+
+            migrationBuilder.DropTable(
+                name: "UserGenders");
+
+            migrationBuilder.DropTable(
+                name: "UserLanguages");
+
+            migrationBuilder.DropTable(
+                name: "UserOccupations");
+
+            migrationBuilder.DropTable(
+                name: "UserRelationStatus");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

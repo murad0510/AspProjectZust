@@ -12,7 +12,7 @@ connection.start().then(function () {
 //let element = document.querySelector("#alert");
 connection.on("Connect", function (info) {
     console.log("Connect Work");
-    //GetAllUsers();
+    GetAllUsers();
     //element.style.display = "block";
     //element.innerHTML = info;
     //setTimeout(() => {
@@ -23,7 +23,7 @@ connection.on("Connect", function (info) {
 
 connection.on("Disconnect", function (info) {
     console.log("DisConnect Work");
-    //GetAllUsers();
+    GetAllUsers();
     //element.style.display = "block";
     //element.innerHTML = info;
     //setTimeout(() => {

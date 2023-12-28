@@ -23,6 +23,14 @@ namespace AspProjectZust.Entities.Entity
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<UserCity> UserCities { get; set; }
+        public DbSet<UserCountry> UserCountries { get; set; }
+        public DbSet<UserLanguage> UserLanguages { get; set; }
+        public DbSet<UserRelationStatus> UserRelationStatus { get; set; }
+        public DbSet<UserGender> UserGenders { get; set; }
+        public DbSet<UserOccupation> UserOccupations { get; set; }
+        public DbSet<UserBloodGroup> UserBloodGroups { get; set; }
+
         public CustomIdentityDbContext()
         {
 
