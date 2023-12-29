@@ -72,7 +72,15 @@ async function GetAllUsers() {
 
                 if (data[i].isFriend) {
                     subContent = `<button class='btn btn-outline-secondary' onclick="UnFollowCall('${data[i].id}')"> UnFollow</button>`;
-                    
+                    if (data[i].isOnline) {
+                        d += `
+                    <div class="contact-item">
+                        <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
+                        <span class="name"><a href="#">${data[i].userName}</a></span>
+                        <span class="status-online"></span>
+                    </div>
+                    `;
+                    }
                 }
                 else {
 
@@ -131,15 +139,7 @@ async function GetAllUsers() {
                    </div>
                 `;
 
-                if (data[i].isOnline) {
-                    d += `
-                    <div class="contact-item">
-                        <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">${data[i].userName}</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    `;
-                }
+               
             }
             console.log(data);
 
