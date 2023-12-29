@@ -408,7 +408,7 @@
                             <div class="option-item">
                                 @await Component.InvokeAsync("UserInfo")
                             </div>
-                        </div> 
+                        </div>
 
                     </div>
                 </nav>
@@ -770,77 +770,8 @@
                         <button type="submit"><i class="ri-search-line"></i></button>
                     </form>
                 </div>
-                <div class="contact-body" data-simplebar>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-18.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Karen Williams</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-4.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Mary A. Schwarz</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-20.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Rex Carruth</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-11.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">James Vanwinkle</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-19.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Oscar Thompson</a></span>
-                        <span class="status-offline"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-12.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Harry Lopez</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-21.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Frank S. Arena</a></span>
-                        <span class="status-offline"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-16.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Karen Williams</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-2.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Mary A. Schwarz</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-14.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Rex Carruth</a></span>
-                        <span class="status-offline"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-18.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">James Vanwinkle</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-5.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Oscar Thompson</a></span>
-                        <span class="status-offline"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-6.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Harry Lopez</a></span>
-                        <span class="status-online"></span>
-                    </div>
-                    <div class="contact-item">
-                        <a href="#"><img src="~/assets/images/user/user-7.jpg" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">Frank S. Arena</a></span>
-                        <span class="status-offline"></span>
-                    </div>
+                <div class="contact-body" id="onlineUsers" data-simplebar>
+
                 </div>
             </div>
         </div>
@@ -848,8 +779,8 @@
     </div>
 
 
-@*     <div class="go-top">
-        <i class="ri-arrow-up-line"></i>
+    @*     <div class="go-top">
+    <i class="ri-arrow-up-line"></i>
     </div> *@
 
     <script src="~/assets/js/jquery.min.js"></script>
@@ -865,10 +796,10 @@
     <script src="~/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/lib/jquery/dist/jquery.min.js"></script>
 
-    
-@*     <script src="~/assets/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/assets/js/site.js"></script>
-    <script src="~/assets/js/user.js"></script> *@
+
+    @*<script src="~/assets/js/signalr/dist/browser/signalr.js"></script>*@
+    @*<script src="~/assets/js/site.js"></script>*@
+    <script src="~/assets/js/user.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

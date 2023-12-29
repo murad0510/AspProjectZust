@@ -25,6 +25,8 @@ namespace AspProjectZust.WebUI.Hubs
             var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
             var userItem = _context.Users.SingleOrDefault(x => x.Id == user.Id);
             userItem.IsOnline = true;
+            //_context.Update(userItem);
+
             await _context.SaveChangesAsync();
 
             string info = user.UserName + " connected successfully";
@@ -33,23 +35,24 @@ namespace AspProjectZust.WebUI.Hubs
 
         public async override Task OnDisconnectedAsync(Exception? exception)
         {
-            //var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
-            //var userItem = _context.Users.SingleOrDefault(x => x.Id == user.Id);
-            //userItem.IsOnline = false;
+            var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
+            var userItem = _context.Users.SingleOrDefault(x => x.Id == user.Id);
+            userItem.IsOnline = false;
             //userItem.DisconnectTime = DateTime.Now;
-            //await _context.SaveChangesAsync();
+            _context.Update(userItem);
+            await _context.SaveChangesAsync();
             //string info = user.UserName + " disconnected successfully";
             await Clients.Others.SendAsync("Disconnect", "s");
         }
 
-        public async Task SendFollow(string id)
-        {
-            await Clients.Users(new String[] { id }).SendAsync("ReceiveNotification");
-        }
+        //public async Task SendFollow(string id)
+        //{
+        //    await Clients.Users(new String[] { id }).SendAsync("ReceiveNotification");
+        //}
 
-        public async Task GetMessages(string receiverId, string senderId)
-        {
-            await Clients.Users(new String[] { receiverId, senderId }).SendAsync("ReceiveMessages", receiverId, senderId);
-        }
+        //public async Task GetMessages(string receiverId, string senderId)
+        //{
+        //    await Clients.Users(new String[] { receiverId, senderId }).SendAsync("ReceiveMessages", receiverId, senderId);
+        //}
     }
 }

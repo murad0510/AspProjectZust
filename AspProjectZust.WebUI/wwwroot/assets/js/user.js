@@ -1,22 +1,22 @@
-﻿function SendFollow(id) {
-    alert("SendFollow request");
-    $.ajax({
-        url: `/Home/SendFollow/${id}`,
-        method: "GET",
-        success: function (data) {
-            console.log(data);
-            //let element = document.querySelector("#alert");
-            //element.style.display = "block";
-            //element.innerHTML = "You friend request sent successfully";
-            GetAllUsers();
-            //SendFollowCall(id);
-            //setTimeout(() => {
-            //    element.innerHTML = "";
-            //    element.style.display = "none";
-            //}, 5000);
-        }
-    })
-}
+﻿//function SendFollow(id) {
+//    alert("SendFollow request");
+//    $.ajax({
+//        url: `/Home/SendFollow/${id}`,
+//        method: "GET",
+//        success: function (data) {
+//            console.log(data);
+//            //let element = document.querySelector("#alert");
+//            //element.style.display = "block";
+//            //element.innerHTML = "You friend request sent successfully";
+//            GetAllUsers();
+//            //SendFollowCall(id);
+//            //setTimeout(() => {
+//            //    element.innerHTML = "";
+//            //    element.style.display = "none";
+//            //}, 5000);
+//        }
+//    })
+//}
 
 function GetMyRequests() {
     $.ajax({
@@ -65,11 +65,14 @@ async function GetAllUsers() {
         method: "GET",
 
         success: function (data) {
+            var context = "";
+            let subContent = "";
+            let d = "";
             for (var i = 0; i < data.length; i++) {
-                var context = "";
-                let subContent = "";
+
                 if (data[i].isFriend) {
                     subContent = `<button class='btn btn-outline-secondary' onclick="UnFollowCall('${data[i].id}')"> UnFollow</button>`;
+                    
                 }
                 else {
 
@@ -127,15 +130,29 @@ async function GetAllUsers() {
                        </div>
                    </div>
                 `;
+
+                if (data[i].isOnline) {
+                    d += `
+                    <div class="contact-item">
+                        <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
+                        <span class="name"><a href="#">${data[i].userName}</a></span>
+                        <span class="status-online"></span>
+                    </div>
+                    `;
+                }
             }
+            console.log(data);
 
             var id = document.getElementById("allUsers");
             if (id != null) {
                 id.innerHTML = context;
             }
+
+            var id2 = document.getElementById("onlineUsers");
+            id2.innerHTML = d;
         }
     })
 }
 
-GetAllUsers();
-GetMyRequests();
+//GetAllUsers();
+//GetMyRequests();
