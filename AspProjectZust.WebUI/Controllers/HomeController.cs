@@ -164,32 +164,32 @@ namespace AspProjectZust.WebUI.Controllers
             return BadRequest();
         }
 
-        //public async Task<IActionResult> GetAllRequests()
-        //{
-        //    var current = await _userManager.GetUserAsync(HttpContext.User);
-        //    var requests = _dbContext.FriendRequests.Where(r => r.ReceiverId == current.Id).ToList();
-        //    //var allUsers = _dbContext.Users.ToList();
-
-        //    //for (int i = 0; i < requests.Count; i++)
-        //    //{
-        //    //    for (int k = 0; k < allUsers.Count; k++)
-        //    //    {
-        //    //        if (requests[i].SenderId == allUsers[k].Id)
-        //    //        {
-        //    //            requests[i].Sender = allUsers[k];
-        //    //        }
-        //    //    }
-        //    //}
-        //    return Ok(requests);
-        //}
-
         [HttpGet]
         public async Task<IActionResult> GetAllRequests()
         {
             var current = await _userManager.GetUserAsync(HttpContext.User);
-            var requests = _dbContext.FriendRequests.Where(r => r.ReceiverId == current.Id);
+            var requests = _dbContext.FriendRequests.Where(r => r.ReceiverId == current.Id).ToList();
+            var allUsers = _dbContext.Users.ToList();
+
+            for (int i = 0; i < requests.Count; i++)
+            {
+                for (int k = 0; k < allUsers.Count; k++)
+                {
+                    if (requests[i].SenderId == allUsers[k].Id)
+                    {
+                        requests[i].Sender = allUsers[k];
+                    }
+                }
+            }
             return Ok(requests);
         }
+
+        //public async Task<IActionResult> GetAllRequests()
+        //{
+        //    var current = await _userManager.GetUserAsync(HttpContext.User);
+        //    var requests = _dbContext.FriendRequests.Where(r => r.ReceiverId == current.Id);
+        //    return Ok(requests);
+        //}
 
         //[HttpPut]
         public async Task<IActionResult> UserUpdateInfo(UpdateUserViewModel updateUser)

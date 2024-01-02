@@ -32,11 +32,16 @@ connection.on("Disconnect", function (info) {
     //}, 5000);
 })
 
+
+async function SendFollowCall(id) {
+    await connection.invoke("SendFollow", id);
+}
+
 //async function SendFollowCall(id) {
 //    await connection.invoke("SendFollow", id);
 //}
 
-//connection.on("ReceiveNotification", function () {
-//    GetMyRequests();
-//    GetAllUsers();
-//})
+connection.on("ReceiveNotification", function () {
+    GetMyRequests();
+    GetAllUsers();
+})

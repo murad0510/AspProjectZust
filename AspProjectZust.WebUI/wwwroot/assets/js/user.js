@@ -1,22 +1,20 @@
-﻿//function SendFollow(id) {
-//    alert("SendFollow request");
-//    $.ajax({
-//        url: `/Home/SendFollow/${id}`,
-//        method: "GET",
-//        success: function (data) {
-//            console.log(data);
-//            //let element = document.querySelector("#alert");
-//            //element.style.display = "block";
-//            //element.innerHTML = "You friend request sent successfully";
-//            GetAllUsers();
-//            //SendFollowCall(id);
-//            //setTimeout(() => {
-//            //    element.innerHTML = "";
-//            //    element.style.display = "none";
-//            //}, 5000);
-//        }
-//    })
-//}
+﻿function SendFollow(id) {
+    $.ajax({
+        url: `/Home/SendFollow/${id}`,
+        method: "GET",
+        success: function (data) {
+            //let element = document.querySelector("#alert");
+            //element.style.display = "block";
+            //element.innerHTML = "You friend request sent successfully";
+            GetAllUsers();
+            SendFollowCall(id);
+            //setTimeout(() => {
+            //    element.innerHTML = "";
+            //    element.style.display = "none";
+            //}, 5000);
+        }
+    })
+}
 
 function GetMyRequests() {
     $.ajax({
@@ -27,34 +25,29 @@ function GetMyRequests() {
             let subContent = "";
             console.log(data);
             for (var i = 0; i < data.length; i++) {
-                //alert(data[i].sender.userName);
-                //if (data[i].status == "Request") {
-                //    subContent = `
-                //    <div class='card-body'>
-                //        <button class='btn btn-success' onclick="AcceptRequest('${data[i].senderId}','${data[i].receiverId}','${data[i].id}')">Accept </button>
-                //        <button class='btn btn-secondary' onclick="DeclineRequest(${data[i].id},'${data[i].senderId}')">Decline</button>
-                //    </div>
-                //    `;
-                //}
-                //else {
-                //    subContent = ` <div class='card-body'>
-                //        <button class='btn btn-secondary' onclick="DeleteRequest('${data[i].receiverId}','${data[i].id}')">Delete</button>
-                //    </div>`;
-                //}
+                content += `
+                                            <div class="item d-flex align-items-center">
+                                                <div class="figure">
+                                                    <a href="#"><img src="/assets/images/user/${data[i].sender.imageUrl}" class="rounded-circle" alt="image"></a>
+                                                </div>
 
-                //let item = `<div class='card' style='width:15rem;'>
-                //        <div class='card-body'> 
-                //            <h5 class='card-title'>Friend Request </h5>
-                //        </div>
-                //               <ul class='list-group list-group-flush'>
-                //<li class='list-group-item'>${data[i].content} </li>
-                //</ul>
-                //    ${subContent}
-                //</div>`;
+                                                <div class="content d-flex justify-content-between align-items-center">
+                                                    <div class="text">
+                                                        <h4><a href="#">${data[i].sender.userName}</a></h4>
+                                                    </div>
+                                                    <div class="btn-box d-flex align-items-center">
+                                                        <button class="delete-btn d-inline-block me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" type="button"><i class="ri-close-line"></i></button>
 
-                //content += item;
+                                                        <button class="confirm-btn d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Confirm" type="button"><i class="ri-check-line"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                
+                `;
             }
-            //$("#requests").html(content);
+            console.log(content);
+            $("#requests").html(content);
         }
     })
 }
@@ -69,7 +62,6 @@ async function GetAllUsers() {
             let subContent = "";
             let d = "";
             for (var i = 0; i < data.length; i++) {
-
                 if (data[i].isFriend) {
                     subContent = `<button class='btn btn-outline-secondary' onclick="UnFollowCall('${data[i].id}')"> UnFollow</button>`;
                     if (data[i].isOnline) {
@@ -141,7 +133,6 @@ async function GetAllUsers() {
 
                
             }
-            console.log(data);
 
             var id = document.getElementById("allUsers");
             if (id != null) {
@@ -155,4 +146,4 @@ async function GetAllUsers() {
 }
 
 //GetAllUsers();
-//GetMyRequests();
+GetMyRequests();
