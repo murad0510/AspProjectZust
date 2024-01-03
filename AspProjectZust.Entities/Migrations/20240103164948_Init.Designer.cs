@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspProjectZust.Entities.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
-    [Migration("20231228191336_Init")]
+    [Migration("20240103164948_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -261,6 +261,9 @@ namespace AspProjectZust.Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestTime")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SenderId")

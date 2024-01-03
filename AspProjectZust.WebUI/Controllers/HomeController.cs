@@ -150,11 +150,12 @@ namespace AspProjectZust.WebUI.Controllers
             {
                 var request = new FriendRequest
                 {
-                    Content = $"{senderUser.UserName} send friend request at {DateTime.Now.ToLongDateString()}",
+                    Content = $"Sent You A Friend Request",
                     SenderId = senderUser.Id,
                     Sender = senderUser,
                     ReceiverId = id,
-                    Status = "Request"
+                    Status = "Request",
+                    RequestTime = DateTime.Now.ToShortDateString(),
                 };
                 _dbContext.FriendRequests.Add(request);
                 await _dbContext.SaveChangesAsync();
@@ -211,6 +212,48 @@ namespace AspProjectZust.WebUI.Controllers
             _dbContext.Update(user);
             await _dbContext.SaveChangesAsync();
             return View("Setting", "Home");
+        }
+
+        public async Task<IActionResult> ConfirmRequest(string senderId, int requestId)
+        {
+            var receiver = await _userManager.GetUserAsync(HttpContext.User);
+            var sender = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == senderId);
+
+            sender.FriendRequests.Add(new FriendRequest
+            {
+                Status = "Notification",
+                Content = $"{receiver.UserName} confirm request",
+                ReceiverId = sender.Id,
+                SenderId = receiver.Id,
+                Sender = receiver,
+                RequestTime = DateTime.Now.ToShortDateString()
+            });
+
+            receiver.IsFriend = true;
+            sender.IsFriend = true;
+
+            var receiverFriend = new Friend
+            {
+                OwnId = receiver.Id,
+                YourFriendId = sender.Id,
+            };
+
+            var senderFriend = new Friend
+            {
+                OwnId = sender.Id,
+                YourFriendId = receiver.Id,
+            };
+            receiver.FollowersCount += 1;
+            receiver.FollowingCount += 1;
+
+            sender.FollowersCount += 1;
+            sender.FollowingCount += 1;
+            var request = await _dbContext.FriendRequests.FirstOrDefaultAsync(f => f.Id == requestId);
+            _dbContext.Remove(request);
+            _dbContext.Update(receiverFriend);
+            _dbContext.Update(senderFriend);
+            await _dbContext.SaveChangesAsync();
+            return Ok();
         }
 
         //[HttpPost]

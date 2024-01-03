@@ -12,18 +12,13 @@ namespace AspProjectZust.Entities.Entity
 {
     public class CustomIdentityUser : IdentityUser, IEntity
     {
-        public CustomIdentityUser(IEnumerable<Friend>? friends, IEnumerable<Post>? posts, IEnumerable<FriendRequest>? friendRequests, IEnumerable<Chat>? chats, IEnumerable<Notification>? notifications)
-        {
-            Friends = friends;
-            Posts = posts;
-            FriendRequests = friendRequests;
-            Chats = chats;
-            Notifications = notifications;
-        }
-
         public CustomIdentityUser()
         {
-
+            Friends = new List<Friend>();
+            Posts = new List<Post>();
+            FriendRequests = new List<FriendRequest>();
+            Chats = new List<Chat>();
+            Notifications = new List<Notification>();
         }
 
         public int LikeCount { get; set; }
@@ -45,12 +40,12 @@ namespace AspProjectZust.Entities.Entity
         public string? Country { get; set; }
         public string? City { get; set; }
 
-        public virtual IEnumerable<Friend>? Friends { get; set; }
-        public virtual IEnumerable<Post>? Posts { get; set; }
-        public virtual IEnumerable<FriendRequest>? FriendRequests { get; set; }
-        public virtual IEnumerable<Chat>? Chats { get; set; }
+        public virtual ICollection<Friend>? Friends { get; set; }
+        public virtual ICollection<Post>? Posts { get; set; }
+        public virtual ICollection<FriendRequest>? FriendRequests { get; set; }
+        public virtual ICollection<Chat>? Chats { get; set; }
         //[NotMapped]
-        public virtual IEnumerable<Notification>? Notifications { get; set; }
+        public virtual ICollection<Notification>? Notifications { get; set; }
 
     }
 }

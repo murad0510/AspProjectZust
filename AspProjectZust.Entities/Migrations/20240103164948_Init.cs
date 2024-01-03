@@ -289,6 +289,7 @@ namespace AspProjectZust.Entities.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RequestTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ReceiverId = table.Column<string>(type: "nvarchar(max)", nullable: true)

@@ -261,6 +261,9 @@ namespace AspProjectZust.Entities.Migrations
                     b.Property<string>("ReceiverId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RequestTime")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SenderId")
                         .HasColumnType("nvarchar(450)");
 

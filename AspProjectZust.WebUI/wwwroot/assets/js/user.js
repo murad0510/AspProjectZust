@@ -16,38 +16,89 @@
     })
 }
 
+function ConfirmRequest(senderId, receiverId, requestId) {
+    $.ajax({
+        url: `/Home/ConfirmRequest?senderId=${senderId}&&requestId=${requestId}`,
+        method: "GET",
+        success: function (data) {
+            SendFollowCall(receiverId);
+            SendFollowCall(senderId);
+            GetAllUsers();
+            //GetMyRequests();
+            //let content = "";
+            //let subContent = "";
+            //console.log(data);
+            //for (var i = 0; i < data.length; i++) {
+
+            //}
+        }
+    })
+}
+
+
 function GetMyRequests() {
     $.ajax({
         url: "/Home/GetAllRequests",
         method: "GET",
         success: function (data) {
             let content = "";
+            let requestCount = 0;
             let subContent = "";
             console.log(data);
             for (var i = 0; i < data.length; i++) {
-                content += `
-                                            <div class="item d-flex align-items-center">
-                                                <div class="figure">
-                                                    <a href="#"><img src="/assets/images/user/${data[i].sender.imageUrl}" class="rounded-circle" alt="image"></a>
-                                                </div>
+                if (data[i].status == "Request") {
+                    content += `
+                            <div class="item d-flex align-items-center">
+                                <div class="figure">
+                                    <a href="#"><img src="/assets/images/user/${data[i].sender.imageUrl}" class="rounded-circle" alt="image"></a>
+                                </div>
 
-                                                <div class="content d-flex justify-content-between align-items-center">
-                                                    <div class="text">
-                                                        <h4><a href="#">${data[i].sender.userName}</a></h4>
-                                                    </div>
-                                                    <div class="btn-box d-flex align-items-center">
-                                                        <button class="delete-btn d-inline-block me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" type="button"><i class="ri-close-line"></i></button>
+                                <div class="content d-flex justify-content-between align-items-center">
+                                    <div class="text">
+                                        <h4><a href="#">${data[i].sender.userName}</a></h4>
+                                    </div>
+                                    <div class="btn-box d-flex align-items-center">
+                                        <button class="delete-btn d-inline-block me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" type="button"><i class="ri-close-line"></i></button>
 
-                                                        <button class="confirm-btn d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Confirm" type="button"><i class="ri-check-line"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                
-                
-                `;
+                                        <button class="confirm-btn d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" onclick="ConfirmRequest('${data[i].senderId}','${data[i].receiverId}','${data[i].id}')" title="Confirm" type="button"><i class="ri-check-line"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                           `;
+
+                    subContent += `
+                                <div class="item d-flex justify-content-between align-items-center">
+                                    <div class="figure">
+                                        <a href="#"><img src="/assets/images/user/${data[i].sender.imageUrl}" class="rounded-circle" alt="image"></a>
+                                    </div>
+                                    <div class="text">
+                                        <h4><a href="#">${data[i].sender.userName}</a></h4>
+                                        <span>${data[i].content}</span>
+                                        <span class="main-color">${data[i].requestTime} Ago</span>
+                                    </div>
+                                </div>
+                                `;
+                    requestCount += 1;
+                }
+                else {
+                    subContent += `
+                                <div class="item d-flex justify-content-between align-items-center">
+                                    <div class="figure">
+                                        <a href="#"><img src="/assets/images/user/${data[i].sender.imageUrl}" class="rounded-circle" alt="image"></a>
+                                    </div>
+                                    <div class="text">
+                                        <h4><a href="#">${data[i].sender.userName}</a></h4>
+                                        <span>${data[i].content}</span>
+                                        <span class="main-color">${data[i].requestTime} Ago</span>
+                                    </div>
+                                </div>
+                    
+                    `;
+                }
             }
-            console.log(content);
             $("#requests").html(content);
+            $("#notifications").html(subContent);
+            $("#userRequestCount").html(requestCount);
         }
     })
 }
@@ -63,9 +114,9 @@ async function GetAllUsers() {
             let d = "";
             for (var i = 0; i < data.length; i++) {
                 if (data[i].isFriend) {
-                    subContent = `<button class='btn btn-outline-secondary' onclick="UnFollowCall('${data[i].id}')"> UnFollow</button>`;
+                    subContent = `<button class='btn btn-outline-secondary' onclick="UnFollowCall('${data[i].id}')">UnFollow</button>`;
                     if (data[i].isOnline) {
-                        d += `
+                        d = `
                     <div class="contact-item">
                         <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
                         <span class="name"><a href="#">${data[i].userName}</a></span>
@@ -73,11 +124,20 @@ async function GetAllUsers() {
                     </div>
                     `;
                     }
+                    else {
+                        d = `
+                    <div class="contact-item">
+                        <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
+                        <span class="name"><a href="#">${data[i].userName}</a></span>
+                        <span class="status-offline"></span>
+                    </div>
+                    `;
+                    }
                 }
                 else {
-
-                    subContent = `<button onclick="SendFollow('${data[i].id}')" class='btn btn-outline-primary'> Follow</button>`;
+                    subContent = `<button onclick="SendFollow('${data[i].id}')" class='btn btn-outline-primary'>Follow</button>`;
                 }
+
                 context += `
                     <div class="col-lg-3 col-sm-6">
                        <div class="single-friends-card">
@@ -130,8 +190,6 @@ async function GetAllUsers() {
                        </div>
                    </div>
                 `;
-
-               
             }
 
             var id = document.getElementById("allUsers");

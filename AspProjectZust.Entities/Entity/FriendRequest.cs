@@ -10,6 +10,7 @@ namespace AspProjectZust.Entities.Entity
     {
         public int Id { get; set; }
         public string? Content { get; set; }
+        public string? RequestTime { get; set; }
         public string? Status { get; set; }
         public string? SenderId { get; set; }
         public string? ReceiverId { get; set; }
