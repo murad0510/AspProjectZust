@@ -214,6 +214,31 @@ namespace AspProjectZust.WebUI.Controllers
             return View("Setting", "Home");
         }
 
+        public async Task<IActionResult> DeleteNotification()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var requests = await _dbContext.FriendRequests.FirstOrDefaultAsync(u => u.SenderId == user.Id && u.Status == "Notification");
+            if (requests != null)
+            {
+                _dbContext.FriendRequests.Remove(requests);
+                await _dbContext.SaveChangesAsync();
+                return Ok(user.Id);
+            }
+            return BadRequest();
+        }
+
+        public async Task<IActionResult> NotificationGeneralFormOfInformation(int requestId)
+        {
+            var requests = await _dbContext.FriendRequests.FirstOrDefaultAsync(r => r.Id == requestId);
+            if (requests != null)
+            {
+                _dbContext.FriendRequests.Remove(requests);
+                await _dbContext.SaveChangesAsync();
+                return Ok();
+            }
+            return BadRequest();
+        }
+
         public async Task<IActionResult> ConfirmRequest(string senderId, int requestId)
         {
             var receiver = await _userManager.GetUserAsync(HttpContext.User);
@@ -255,12 +280,6 @@ namespace AspProjectZust.WebUI.Controllers
             await _dbContext.SaveChangesAsync();
             return Ok();
         }
-
-        //[HttpPost]
-        //public IActionResult UserChangeProfile(UpdateUserViewModel user)
-        //{
-        //    return Ok(user);
-        //}
     }
 }
 
