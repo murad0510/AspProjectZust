@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspProjectZust.Entities.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
-    [Migration("20240103164948_Init")]
+    [Migration("20240105094857_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,6 +152,9 @@ namespace AspProjectZust.Entities.Migrations
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasRequestPending")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");

@@ -26,6 +26,7 @@ namespace AspProjectZust.Entities.Entity
         public int FollowingCount { get; set; }
         public bool IsOnline { get; set; }
         public bool IsFriend { get; set; }
+        public bool HasRequestPending { get; set; }
         public string? ImageUrl { get; set; } = "userWithoutPicture.png";
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

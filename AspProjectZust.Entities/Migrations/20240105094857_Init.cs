@@ -33,6 +33,7 @@ namespace AspProjectZust.Entities.Migrations
                     FollowingCount = table.Column<int>(type: "int", nullable: false),
                     IsOnline = table.Column<bool>(type: "bit", nullable: false),
                     IsFriend = table.Column<bool>(type: "bit", nullable: false),
+                    HasRequestPending = table.Column<bool>(type: "bit", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),

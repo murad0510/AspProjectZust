@@ -18,6 +18,17 @@ function SendFollow(id) {
     })
 }
 
+function UnFollowCall(id) {
+    $.ajax({
+        url: `/Home/UnFollowCall?id=${id}`,
+        method: "GET",
+        success: function (data) {
+            GetAllUsers();
+            SendFollowCall(id);
+        }
+    })
+}
+
 function ConfirmRequest(senderId, receiverId, requestId) {
     $.ajax({
         url: `/Home/ConfirmRequest?senderId=${senderId}&&requestId=${requestId}`,
@@ -170,7 +181,7 @@ function GetMyRequests() {
                     notificationCount += 1;
                 }
             }
-            $("#requests").html(content); 
+            $("#requests").html(content);
             $("#notifications").html(subContent);
             $("#yourNotifications").html(notificatonsContent);
             $("#userRequestCount").html(requestCount);
@@ -193,7 +204,7 @@ async function GetAllUsers() {
                 if (data[i].isFriend) {
                     subContent = `<button class='btn btn-outline-secondary' onclick="UnFollowCall('${data[i].id}')">UnFollow</button>`;
                     if (data[i].isOnline) {
-                        d = `
+                        d += `
                     <div class="contact-item">
                         <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
                         <span class="name"><a href="#">${data[i].userName}</a></span>
@@ -202,7 +213,7 @@ async function GetAllUsers() {
                     `;
                     }
                     else {
-                        d = `
+                        d += `
                     <div class="contact-item">
                         <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
                         <span class="name"><a href="#">${data[i].userName}</a></span>
@@ -268,7 +279,12 @@ async function GetAllUsers() {
                     `;
                 }
                 else {
-                    subContent = `<button onclick="SendFollow('${data[i].id}')" class='btn btn-outline-primary'>Follow</button>`;
+                    if (data[i].hasRequestPending) {
+                        subContent = `<button onclick="SendFollow('${data[i].id}')" class='btn btn-outline-secondary'>Already Sent</button>`;
+                    }
+                    else {
+                        subContent = `<button onclick="SendFollow('${data[i].id}')" class='btn btn-outline-primary'>Follow</button>`;
+                    }
                     context += `
                     <div class="col-lg-3 col-sm-6">
                        <div class="single-friends-card">
