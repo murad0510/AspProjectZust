@@ -86,6 +86,20 @@ function NotificationGeneralFormOfInformation(receiverId, requestId) {
     })
 }
 
+
+function DeleteRequest(id, senderId) {
+    $.ajax({
+        url: `/Home/DeleteRequest?requestId=${id}&&senderId=${senderId}`,
+        method: "GET",
+
+        success: function (data) {
+            GetAllUsers();
+            GetMyRequests();
+            SendFollowCall(senderId);
+        }
+    })
+}
+
 function GetMyRequests() {
     $.ajax({
         url: "/Home/GetAllRequests",
@@ -110,7 +124,7 @@ function GetMyRequests() {
                                         <h4><a href="#">${data[i].sender.userName}</a></h4>
                                     </div>
                                     <div class="btn-box d-flex align-items-center">
-                                        <button class="delete-btn d-inline-block me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" type="button"><i class="ri-close-line"></i></button>
+                                        <button class="delete-btn d-inline-block me-2" data-bs-toggle="tooltip" data-bs-placement="top" onclick="DeleteRequest(${data[i].id},'${data[i].senderId}')" title="Delete" type="button"><i class="ri-close-line"></i></button>
 
                                         <button class="confirm-btn d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" onclick="ConfirmRequest('${data[i].senderId}','${data[i].receiverId}','${data[i].id}')" title="Confirm" type="button"><i class="ri-check-line"></i></button>
                                     </div>
@@ -190,6 +204,29 @@ function GetMyRequests() {
     })
 }
 
+function UserRefresh() {
+    $.ajax({
+        url: `/Home/CurrentUser`,
+        method: "GET",
+        success: function (user) {
+            $(".likeCount").html(user.likeCount);
+            $(".followingCount").html(user.followingCount);
+            $(".followersCount").html(user.followersCount);
+        }
+    })
+}
+
+function AlreadySent(id) {
+    $.ajax({
+        url: `/Home/AlreadySent?id=${id}`,
+        method: "GET",
+        success: function (user) {
+            GetAllUsers();
+            SendFollowCall(id);
+        }
+    })
+}
+
 async function GetAllUsers() {
     $.ajax({
         url: "/Home/GetAllUsers",
@@ -199,6 +236,7 @@ async function GetAllUsers() {
             var context = "";
             let subContent = "";
             let friendContent = "";
+            let liveChatFriend = "";
             let d = "";
             for (var i = 0; i < data.length; i++) {
                 if (data[i].isFriend) {
@@ -211,15 +249,39 @@ async function GetAllUsers() {
                         <span class="status-online"></span>
                     </div>
                     `;
+
+                        liveChatFriend += `  
+                            <div class="chat-box"  style="width:100px;height:100px">
+                                       <div class="image">
+                                           <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
+                                           <span class="status-online"></span>
+                                       </div>
+                                 <h3>
+                                     <a href="#">${data[i].userName}</a>
+                                 </h3>
+                            </div>     
+                        `;
                     }
                     else {
                         d += `
-                    <div class="contact-item">
-                        <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
-                        <span class="name"><a href="#">${data[i].userName}</a></span>
-                        <span class="status-offline"></span>
-                    </div>
-                    `;
+                        <div class="contact-item">
+                            <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
+                            <span class="name"><a href="#">${data[i].userName}</a></span>
+                            <span class="status-offline"></span>
+                        </div>
+                        `;
+
+                        liveChatFriend += `  
+                                   <div class="chat-box"  style="width:100px;height:100px">
+                                       <div class="image">
+                                           <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
+                                           <span class="status-offline"></span>
+                                       </div>
+                                       <h3>
+                                           <a href="#">${data[i].userName}</a>
+                                       </h3>
+                                   </div>
+                        `;
                     }
 
                     friendContent += `
@@ -280,7 +342,7 @@ async function GetAllUsers() {
                 }
                 else {
                     if (data[i].hasRequestPending) {
-                        subContent = `<button onclick="SendFollow('${data[i].id}')" class='btn btn-outline-secondary'>Already Sent</button>`;
+                        subContent = `<button onclick="AlreadySent('${data[i].id}')" class='btn btn-outline-secondary'>Already Sent</button>`;
                     }
                     else {
                         subContent = `<button onclick="SendFollow('${data[i].id}')" class='btn btn-outline-primary'>Follow</button>`;
@@ -338,8 +400,9 @@ async function GetAllUsers() {
                    </div>
                 `;
                 }
-
             }
+
+            UserRefresh()
 
             var id = document.getElementById("allUsers");
             if (id != null) {
@@ -350,6 +413,12 @@ async function GetAllUsers() {
             /*if (id2 != null) {*/
             id2.innerHTML = d;
             //}
+
+            var liveChatFriends = document.getElementById("liveChatFriends");
+            if (liveChatFriends != null) {
+                liveChatFriends.innerHTML = liveChatFriend;
+            }
+
 
             var yourFriendElement = document.getElementById("yourFriend");
             if (yourFriendElement != null) {

@@ -96,6 +96,10 @@ namespace AspProjectZust.WebUI.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             ViewBag.User = user;
+
+            Console.WriteLine(user.FollowersCount);
+            Console.WriteLine(user.FollowingCount);
+
             return View();
         }
 
@@ -122,6 +126,41 @@ namespace AspProjectZust.WebUI.Controllers
         public IActionResult Weather()
         {
             return View();
+        }
+
+        public async Task<IActionResult> AlreadySent(string id)
+        {
+            try
+            {
+                var senderUser = await _userManager.GetUserAsync(HttpContext.User);
+                var receiverUser = _userManager.Users.FirstOrDefault(i => i.Id == id);
+
+                var request = await _dbContext.FriendRequests.FirstOrDefaultAsync(f => f.SenderId == senderUser.Id && f.ReceiverId == receiverUser.Id && f.Status == "Request");
+
+                _dbContext.FriendRequests.Remove(request);
+
+                //if (receiverUser != null)
+                //{
+                //    var sendRequest = new FriendRequest
+                //    {
+                //        Content = $"He withdrew the friendly situation he had sent",
+                //        SenderId = senderUser.Id,
+                //        Sender = senderUser,
+                //        ReceiverId = id,
+                //        Status = "Notification",
+                //        RequestTime = DateTime.Now.ToShortDateString() + "\t\t" + DateTime.Now.ToShortTimeString(),
+                //    };
+
+                //_dbContext.FriendRequests.Add(request);
+                await _dbContext.SaveChangesAsync();
+                //await _userManager.UpdateAsync(receiverUser);
+                //}
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         public async Task<IActionResult> GetAllUsers()
@@ -173,11 +212,11 @@ namespace AspProjectZust.WebUI.Controllers
                     Sender = senderUser,
                     ReceiverId = id,
                     Status = "Request",
-                    RequestTime = DateTime.Now.ToShortDateString() + "     " + DateTime.Now.ToShortTimeString(),
+                    RequestTime = DateTime.Now.ToShortDateString() + "\t\t" + DateTime.Now.ToShortTimeString(),
                 };
                 _dbContext.FriendRequests.Add(request);
-                await _dbContext.SaveChangesAsync();
                 await _userManager.UpdateAsync(receiverUser);
+                await _dbContext.SaveChangesAsync();
                 return Ok();
             }
             return BadRequest();
@@ -186,10 +225,17 @@ namespace AspProjectZust.WebUI.Controllers
         public async Task<IActionResult> UnFollowCall(string id)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            var friendUser = _userManager.Users.FirstOrDefault(i => i.Id == id);
 
             var friend = _dbContext.Friends.Where(f => f.OwnId == id && f.YourFriendId == user.Id || f.OwnId == user.Id && f.YourFriendId == id);
 
             //var request = await _dbContext.FriendRequests.FirstOrDefaultAsync(f => f.SenderId == sender.Id && f.ReceiverId == receicer.Id && f.Status == "Request");
+
+            user.FollowersCount -= 1;
+            user.FollowingCount -= 1;
+
+            friendUser.FollowersCount -= 1;
+            friendUser.FollowingCount -= 1;
 
             var request = new FriendRequest
             {
@@ -198,11 +244,14 @@ namespace AspProjectZust.WebUI.Controllers
                 Sender = user,
                 ReceiverId = id,
                 Status = "Notification",
-                RequestTime = DateTime.Now.ToShortTimeString(),
+                RequestTime = DateTime.Now.ToShortDateString() + "\t\t" + DateTime.Now.ToShortTimeString(),
             };
 
-            _dbContext.FriendRequests.Add(request);
             await _userManager.UpdateAsync(user);
+            await _userManager.UpdateAsync(friendUser);
+
+            await _dbContext.FriendRequests.AddAsync(request);
+
 
             _dbContext.Friends.RemoveRange(friend);
             await _dbContext.SaveChangesAsync();
@@ -238,6 +287,13 @@ namespace AspProjectZust.WebUI.Controllers
         //}
 
         //[HttpPut]
+
+        public async Task<IActionResult> CurrentUser()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return Ok(user);
+        }
+
         public async Task<IActionResult> UserUpdateInfo(UpdateUserViewModel updateUser)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -257,6 +313,31 @@ namespace AspProjectZust.WebUI.Controllers
             _dbContext.Update(user);
             await _dbContext.SaveChangesAsync();
             return View("Setting", "Home");
+        }
+
+        public async Task<IActionResult> DeleteRequest(int requestId, string senderId)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var sender = await _dbContext.Users.FirstOrDefaultAsync(s => s.Id == senderId);
+
+            var request = await _dbContext.FriendRequests.FirstOrDefaultAsync(r => r.Id == requestId);
+
+            var newRequest = new FriendRequest
+            {
+                ReceiverId = sender.Id,
+                Sender = user,
+                SenderId = user.Id,
+                Status = "Notification",
+                Content = "Rejected the offer of friendship",
+                RequestTime = DateTime.Now.ToShortDateString() + "\t\t" + DateTime.Now.ToShortTimeString(),
+            };
+
+            await _dbContext.FriendRequests.AddAsync(newRequest);
+
+
+            _dbContext.FriendRequests.Remove(request);
+            await _dbContext.SaveChangesAsync();
+            return Ok();
         }
 
         public async Task<IActionResult> DeleteNotification()
