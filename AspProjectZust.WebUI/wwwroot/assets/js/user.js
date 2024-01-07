@@ -188,7 +188,7 @@ function GetMyRequests() {
                                                            <span class="main-color">${data[i].requestTime} Ago</span>
                                                        </div>
                                                        <div class="icon">
-                                                           <button onclick="NotificationGeneralFormOfInformation('${data[i].receiverId}','${data[i].id}')"><i class="flaticon-x-mark"></i></button>
+                                                           <a onclick="NotificationGeneralFormOfInformation('${data[i].receiverId}','${data[i].id}')"><i class="flaticon-x-mark"></i></a>
                                                        </div>
                                         </div> 
                     `;
@@ -227,6 +227,52 @@ function AlreadySent(id) {
     })
 }
 
+function UserMessage(id) {
+    $.ajax({
+        url: `/Home/UserMessage?id=${id}`,
+        method: "GET",
+
+        success: function (friend) {
+            let context = ``;
+            context += `
+                      <div class="live-chat-header d-flex justify-content-between align-items-center">
+                          <div class="live-chat-info">
+                              <a href="#"><img src="/assets/images/user/${friend.imageUrl}" class="rounded-circle" alt="image"></a>
+                              <h3>
+                                  <a href="#">${friend.userName}</a>
+                              </h3>
+                          </div>
+                      
+                          <ul class="live-chat-right">
+                              <li>
+                                  <button class="btn d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" type="button"><i class="ri-delete-bin-line"></i></button>
+                              </li>
+                          </ul>
+                      </div>
+                <div class="live-chat-container">
+
+               </div>
+
+                       
+            <div class="chat-list-footer">
+                <form class="d-flex align-items-center">
+                    <div class="btn-box d-flex align-items-center me-3">
+                        <button class="file-attachment-btn d-inline-block me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="File Attachment" type="button"><i class="ri-attachment-2"></i></button>
+
+                        <button class="emoji-btn d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Emoji" type="button"><i class="ri-user-smile-line"></i></button>
+                    </div>
+
+                    <input type="text" class="form-control" placeholder="Type your message...">
+
+                    <button type="submit" class="send-btn d-inline-block">Send</button>
+                </form>
+            </div>
+            `;
+            $("#liveChatBody").html(context);
+        }
+    })
+}
+
 async function GetAllUsers() {
     $.ajax({
         url: "/Home/GetAllUsers",
@@ -251,9 +297,9 @@ async function GetAllUsers() {
                     `;
 
                         liveChatFriend += `  
-                            <div class="chat-box"  style="width:100px;height:100px">
+                            <div class="chat-box" style="width:100px;height:100px;margin-left:30px;">
                                        <div class="image">
-                                           <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
+                                           <a onclick="UserMessage('${data[i].id}')"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
                                            <span class="status-online"></span>
                                        </div>
                                  <h3>
@@ -272,9 +318,9 @@ async function GetAllUsers() {
                         `;
 
                         liveChatFriend += `  
-                                   <div class="chat-box"  style="width:100px;height:100px">
+                                   <div class="chat-box" style="width:100px;height:100px;margin-left:30px;">
                                        <div class="image">
-                                           <a href="#"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
+                                           <a onclick="UserMessage('${data[i].id}')"><img src="/assets/images/user/${data[i].imageUrl}" class="rounded-circle" alt="image"></a>
                                            <span class="status-offline"></span>
                                        </div>
                                        <h3>
@@ -413,6 +459,7 @@ async function GetAllUsers() {
             /*if (id2 != null) {*/
             id2.innerHTML = d;
             //}
+            var yourFriendElement = document.getElementById("yourFriend");
 
             var liveChatFriends = document.getElementById("liveChatFriends");
             if (liveChatFriends != null) {
@@ -420,10 +467,11 @@ async function GetAllUsers() {
             }
 
 
-            var yourFriendElement = document.getElementById("yourFriend");
             if (yourFriendElement != null) {
                 yourFriendElement.innerHTML = friendContent;
             }
+
+            $("#liveChatBody").html("");
         }
     })
 }

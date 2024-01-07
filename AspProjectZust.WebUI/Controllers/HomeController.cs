@@ -133,7 +133,7 @@ namespace AspProjectZust.WebUI.Controllers
             try
             {
                 var senderUser = await _userManager.GetUserAsync(HttpContext.User);
-                var receiverUser = _userManager.Users.FirstOrDefault(i => i.Id == id);
+                var receiverUser = await _userManager.Users.FirstOrDefaultAsync(i => i.Id == id);
 
                 var request = await _dbContext.FriendRequests.FirstOrDefaultAsync(f => f.SenderId == senderUser.Id && f.ReceiverId == receiverUser.Id && f.Status == "Request");
 
@@ -141,17 +141,18 @@ namespace AspProjectZust.WebUI.Controllers
 
                 //if (receiverUser != null)
                 //{
-                //    var sendRequest = new FriendRequest
-                //    {
-                //        Content = $"He withdrew the friendly situation he had sent",
-                //        SenderId = senderUser.Id,
-                //        Sender = senderUser,
-                //        ReceiverId = id,
-                //        Status = "Notification",
-                //        RequestTime = DateTime.Now.ToShortDateString() + "\t\t" + DateTime.Now.ToShortTimeString(),
-                //    };
 
-                //_dbContext.FriendRequests.Add(request);
+                var sendRequest = new FriendRequest
+                {
+                    Content = $"He withdrew the friendly situation he had sent",
+                    SenderId = senderUser.Id,
+                    Sender = senderUser,
+                    ReceiverId = id,
+                    Status = "Notification",
+                    RequestTime = DateTime.Now.ToShortDateString() + "\t\t" + DateTime.Now.ToShortTimeString(),
+                };
+
+                await _dbContext.FriendRequests.AddAsync(sendRequest);
                 await _dbContext.SaveChangesAsync();
                 //await _userManager.UpdateAsync(receiverUser);
                 //}
@@ -365,6 +366,13 @@ namespace AspProjectZust.WebUI.Controllers
             return BadRequest();
         }
 
+        public async Task<IActionResult> UserMessage(string id)
+        {
+            //var user = await _userManager.GetUserAsync(HttpContext.User);
+            var friend = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return Ok(friend);
+        }
+
         public async Task<IActionResult> ConfirmRequest(string senderId, int requestId)
         {
             var receiver = await _userManager.GetUserAsync(HttpContext.User);
@@ -377,7 +385,7 @@ namespace AspProjectZust.WebUI.Controllers
                 ReceiverId = sender.Id,
                 SenderId = receiver.Id,
                 Sender = receiver,
-                RequestTime = DateTime.Now.ToShortDateString()
+                RequestTime = DateTime.Now.ToShortDateString() + "\t\t" + DateTime.Now.ToShortTimeString(),
             });
 
             var receiverFriend = new Friend
