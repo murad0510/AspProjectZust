@@ -110,7 +110,7 @@ function GetMyRequests() {
             let notificationCount = 0;
             let notificatonsContent = "";
             let subContent = "";
-            console.log(data);
+            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 if (data[i].status == "Request") {
                     content += `
@@ -227,6 +227,123 @@ function AlreadySent(id) {
     })
 }
 
+function SendMessage(receiverId, senderId) {
+    let element = document.getElementById("message");
+    var object = {
+        receiverId: receiverId,
+        senderId: senderId,
+        message: element.value
+    };
+    //console.log(object);
+    $.ajax({
+        url: `/Home/AddMessage`,
+        method: "POST",
+        data: object,
+        success: function (data) {
+            //console.log("d");
+            GetMessageCall(receiverId, senderId);
+            element.value = "";
+        }
+    })
+}
+
+function GetMessages(receiverId, senderId) {
+    $.ajax({
+        url: `/Home/GetAllMessages?receiverId=${receiverId}&senderId=${senderId}`,
+        method: "GET",
+        success: function (data) {
+            let content = "";
+            console.log(data);
+            for (var i = 0; i < data.chat.messages.length; i++) {
+                if (data.chat.messages[i].senderId == data.currenUserId) {
+                    content += `
+                          <div class="chat chat-left">
+                                <div class="chat-avatar">
+                                    <a routerLink="/profile" class="d-inline-block">
+                                        <img src="/assets/images/user/${data.senderImageUrl}" width="50" height="50" class="rounded-circle" alt="image">
+                                    </a>
+                                </div>
+
+                                <div class="chat-body">
+                                    <div class="chat-message">
+                                        <p>${data.chat.messages[i].content}</p>
+                                        <span class="time d-block">${data.chat.messages[i].writeTime}</span>
+                                    </div>
+                                </div>
+                            </div>
+                    `;
+                }
+                else {
+                    content += `
+
+                        <div class="chat">
+                                <div class="chat-avatar">
+                                    <a routerLink="/profile" class="d-inline-block">
+                                        <img src="/assets/images/user/${data.receiverImageUrl}" width="50" height="50" class="rounded-circle" alt="image">
+                                    </a>
+                                </div>
+
+                                <div class="chat-body">
+                                    <div class="chat-message">
+                                         <p>${data.chat.messages[i].content}</p>
+                                        <span class="time d-block">${data.chat.messages[i].writeTime}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                    `;
+                }
+            }
+
+
+
+
+
+            //for (var i = 0; i < data.messages.length; i++) {
+            //    if (receiverId == data.currentUserId) {
+            //        content += `
+            //              <div class="chat chat-left">
+            //                    <div class="chat-avatar">
+            //                        <a routerLink="/profile" class="d-inline-block">
+            //                            <img src="/assets/images/user/${data.senderImageUrl}" width="50" height="50" class="rounded-circle" alt="image">
+            //                        </a>
+            //                    </div>
+
+            //                    <div class="chat-body">
+            //                        <div class="chat-message">
+            //                            <p>${data.messages[i].content}</p>
+            //                            <span class="time d-block">${data.messages[i].WriteTime}</span>
+            //                        </div>
+            //                    </div>
+            //                </div>
+            //        `;
+            //    }
+            //    else {
+            //        content += `
+
+            //            <div class="chat">
+            //                    <div class="chat-avatar">
+            //                        <a routerLink="/profile" class="d-inline-block">
+            //                            <img src="/assets/images/user/${data.receiverImageUrl}" width="50" height="50" class="rounded-circle" alt="image">
+            //                        </a>
+            //                    </div>
+
+            //                    <div class="chat-body">
+            //                        <div class="chat-message">
+            //                             <p>${data.messages[i].content}</p>
+            //                            <span class="time d-block">${data.messages[i].WriteTime}</span>
+            //                        </div>
+            //                    </div>
+            //                </div>
+
+            //        `;
+            //    }
+            //}
+            $("#messages").html(content);
+        }
+    })
+}
+
 function UserMessage(id) {
     $.ajax({
         url: `/Home/UserMessage?id=${id}`,
@@ -273,12 +390,14 @@ function UserMessage(id) {
     })
 }
 
+
 async function GetAllUsers() {
     $.ajax({
         url: "/Home/GetAllUsers",
         method: "GET",
 
         success: function (data) {
+            //console.log(data);
             var context = "";
             let subContent = "";
             let friendContent = "";
@@ -375,8 +494,11 @@ async function GetAllUsers() {
                                    <div class="add-friend-btn">
                                    ${subContent}
                                    </div>
-                                   <div class="send-message-btn">
-                                       <button type="submit">Send Message</button>
+                                   <div class='send-message-btn'>
+                                           <a href='/Home/Messages/${data[i].id}'>
+                                             Send Message
+                                           </a>
+                                     </button>
                                    </div>
                                </div>
                            </div>

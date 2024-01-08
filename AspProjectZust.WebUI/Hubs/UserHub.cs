@@ -49,14 +49,17 @@ namespace AspProjectZust.WebUI.Hubs
         {
             await Clients.Users(new String[] { id }).SendAsync("ReceiveNotification");
         }
+
+
+
         //public async Task SendFollow(string id)
         //{
         //    await Clients.Users(new String[] { id }).SendAsync("ReceiveNotification");
         //}
 
-        //public async Task GetMessages(string receiverId, string senderId)
-        //{
-        //    await Clients.Users(new String[] { receiverId, senderId }).SendAsync("ReceiveMessages", receiverId, senderId);
-        //}
+        public async Task GetMessage(string receiverId, string senderId)
+        {
+            await Clients.Users(new String[] { receiverId, senderId }).SendAsync("ReceiveMessages", receiverId, senderId);
+        }
     }
 }
