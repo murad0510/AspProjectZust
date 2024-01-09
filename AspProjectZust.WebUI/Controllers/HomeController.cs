@@ -63,110 +63,9 @@ namespace AspProjectZust.WebUI.Controllers
             return View();
         }
 
-        [HttpPost(Name = "AddMessage")]
-        public async Task<IActionResult> AddMessage(MessageViewModel model)
-        {
-            try
-            {
-                var user = await _userManager.GetUserAsync(HttpContext.User);
-                var chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.SenderId == model.SenderId && c.ReceiverId == model.ReceiverId
-           || c.SenderId == model.ReceiverId && c.ReceiverId == model.SenderId);
-                if (chat != null)
-                {
-                    var message = new Message
-                    {
-                        ChatId = chat.id,
-                        Content = model.Message,
-                        WriteTime = DateTime.Now,
-                        HasSeen = false,
-                        IsImage = false,
-                        ReceiverId = model.ReceiverId,
-                        SenderId = user.Id,
-                    };
-
-                    if (user.Id != model.ReceiverId)
-                    {
-                        message.ReceiverId = model.ReceiverId;
-                        message.SenderId = user.Id;
-                    }
-                    else
-                    {
-                        message.SenderId = user.Id;
-                        message.ReceiverId = model.SenderId;
-                    }
-
-                    await _dbContext.Messages.AddAsync(message);
-                    await _dbContext.SaveChangesAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            return Ok();
-        }
-
-
-        public async Task<IActionResult> Messages(string id)
-        {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var chat = await _dbContext.Chats.Include(nameof(Chat.Receiver)).FirstOrDefaultAsync(c => c.SenderId == user.Id && c.ReceiverId == id || c.ReceiverId == user.Id && c.SenderId == id);
-            var receiver = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-            if (chat == null)
-            {
-                chat = new Chat
-                {
-                    Messages = new List<Message>(),
-                    ReceiverId = id,
-                    SenderId = user.Id,
-                };
-
-                await _dbContext.Chats.AddAsync(chat);
-                await _dbContext.SaveChangesAsync();
-            }
-
-            if (chat.ReceiverId == user.Id)
-            {
-                chat.Receiver = _dbContext.Users.FirstOrDefault(u => u.Id == chat.SenderId);
-            }
-
-            List<Message> messages = new List<Message>();
-            if (chat != null)
-            {
-                messages = await _dbContext.Messages.Where(c => c.ChatId == chat.id).OrderBy(d => d.WriteTime).ToListAsync();
-            }
-
-            chat.Messages = messages;
-
-            var model = new ChatViewModel
-            {
-                CurrentChat = chat,
-                Sender = receiver,
-                CurrentUserId = user.Id,
-            };
-
-            return View(model);
-        }
-
-        public async Task<IActionResult> GetAllMessages(string receiverId, string senderId)
-        {
-            var chat = await _dbContext.Chats.Include(nameof(Chat.Receiver)).FirstOrDefaultAsync(c => c.SenderId == receiverId && c.ReceiverId == senderId || c.ReceiverId == receiverId && c.SenderId == senderId);
-
-            var receiver = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == senderId);
-            var sender = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == receiverId);
-            var messages = await _dbContext.Messages.Where(m => m.ReceiverId == receiverId && m.SenderId == senderId || m.SenderId == receiverId && m.ReceiverId == senderId).OrderBy(d => d.WriteTime).ToListAsync();
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-
-            chat.Messages = messages;
-
-            //var model = new ChatViewModel
-            //{
-            //    CurrentChat = chat,
-            //    Sender = receiver,
-            //    CurrentUserId = user.Id,
-            //};
-            return Ok(new { Messages = messages, CurrenUserId = user.Id, Chat = chat, ReceiverImageUrl = receiver.ImageUrl, SenderImageUrl = sender.ImageUrl });
+        public IActionResult Messages(string id)
+        {       
+            return View();
         }
 
         public async Task<IActionResult> MyProfile()
@@ -474,14 +373,6 @@ namespace AspProjectZust.WebUI.Controllers
             }
             return BadRequest();
         }
-
-        public async Task<IActionResult> UserMessage(string id)
-        {
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-            var friend = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
-            return Ok(friend);
-        }
-
 
         public async Task<IActionResult> ConfirmRequest(string senderId, int requestId)
         {
